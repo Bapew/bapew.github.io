@@ -194,12 +194,13 @@
 
         /*МАРКЕТ И СТИЛь МАРКЕТА*/
         .market-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 25px;
-    align-items: start; /* Карточка игры зафиксирует свой размер и не будет вытягиваться */
-
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 320px)); /* Ограничили максимальную ширину карточки */
+            gap: 25px;
+            align-items: start;
+            justify-content: center; /* ЭТА СТРОЧКА ОТЦЕНТРУЕТ КАРТОЧКУ ПО ЦЕНТРУ ЭКРАНА */
         }
+
 
         .product-card {
             background: var(--card-glass);
