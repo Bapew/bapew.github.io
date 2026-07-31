@@ -99,13 +99,13 @@
             align-items: center;
             gap: 12px;
             text-decoration: none;
-            transform-origin: left center; /* Увеличение происходит строго из левой точки, без сдвигов */
-            transition: transform 0.25s ease-in-out;
+            transform-origin: left center; /* Увеличение идет из левой точки, чтобы меню не прыгало */
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1); /* Плавное увеличение */
         }
 
-        /* Текст плавно увеличивается на месте при наведении */
+        /* При наведении логотип аккуратно увеличивается */
         .logo-block:hover {
-            transform: scale(1.05);
+            transform: scale(1.06);
         }
      
         .logo-img {
@@ -115,24 +115,23 @@
             display: block;
         }
         
-        /* --- ОБНОВЛЕННЫЙ ТЕКСТ ЛОГОТИПА С ЖИВЫМИ ВОЛНАМИ --- */
         .logo-text {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 24px;
-            font-weight: 900;
+            font-family: 'Montserrat', sans-serif; /* Тот самый шрифт заголовка */
+            font-size: 26px;
+            font-weight: 900; /* Максимально жирный сочный стиль */
             letter-spacing: 0.5px;
-            position: relative;
-            display: inline-block;
             line-height: 32px;
-            
-            /* Базовый текст с постоянным поблёскиванием */
+            display: inline-block;
+      
+            /* ЭФФЕКТ ПОБЛЁСКИВАНИЯ (БЛИКА) */
+            /* Плавный градиент: белый переходит в розовый закат и обратно */
             background: linear-gradient(120deg, #fff 30%, var(--sunset-pink) 45%, #fff 55%, var(--sunset-pink) 70%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shineText 6s linear infinite;
+            animation: shineText 5s linear infinite; /* Бесконечный мягкий блеск */
         }
-
+        
         /* Слой океанской воды внутри букв */
         .logo-text::before {
             content: attr(data-text);
@@ -165,17 +164,10 @@
             animation: textWaveFloat 1.5s ease-in-out infinite alternate;
         }
 
-        /* --- СКОРОСТНАЯ АНИМАЦИЯ ВОЛН СЛЕВА НАПРАВО --- */
-        @keyframes waveFast {
-            0% {
-                clip-path: polygon(0% 50%, 12.5% 45%, 25% 50%, 37.5% 55%, 50% 50%, 62.5% 45%, 75% 50%, 87.5% 55%, 100% 50%, 100% 100%, 0% 100%);
-            }
-            50% {
-                clip-path: polygon(0% 50%, 12.5% 55%, 25% 50%, 37.5% 45%, 50% 50%, 62.5% 55%, 75% 50%, 87.5% 45%, 100% 50%, 100% 100%, 0% 100%);
-            }
-            100% {
-                clip-path: polygon(0% 50%, 12.5% 45%, 25% 50%, 37.5% 55%, 50% 50%, 62.5% 45%, 75% 50%, 87.5% 55%, 100% 50%, 100% 100%, 0% 100%);
-            }
+        /* Анимация движения глянцевого блика по буквам */
+        @keyframes shineText {
+            0% { background-position: 200% center; }
+            100% { background-position: -200% center; }
         }
         
         .nav-menu {
@@ -519,27 +511,10 @@
 <body>
 
      <header>
-        <div class="container nav-container">
-            <!-- Исправленный блок логотипа -->
-            <div class="logo-link">
-                <a href="#home" class="logo-block">
-                    <img src="images/logo.png" alt="💣" class="logo-img">
-                    <span class="logo-text" data-text="FLASH STUDIO">FLASH STUDIO</span>
-                </a>
-            </div>
-            
-            <div class="nav-menu">
-                <nav class="nav-links">
-                    <a href="#home">Главная</a>
-                    <a href="#games">Игры</a>
-                    <a href="#news">Новости</a>
-                </nav>
-                <div class="nav-socials">
-                    <a href="https://t.me" target="_blank" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
-                    <a href="#" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
-                </div>
-            </div>
-        </div>
+<a href="#home" class="logo-block">
+    <img src="images/logo.png" alt="💣" class="logo-img" style="height: 32px; width: auto; object-fit: contain; display: block;">
+    <div class="logo-text">FLASH STUDIO</div>
+</a>
     </header>
 
          <!-- ГЛАВНЫЙ ЭКРАН -->
