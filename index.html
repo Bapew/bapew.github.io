@@ -131,38 +131,6 @@
             -webkit-text-fill-color: transparent;
             animation: shineText 5s linear infinite; /* Бесконечный мягкий блеск */
         }
-        
-        /* Слой океанской воды внутри букв */
-        .logo-text::before {
-            content: attr(data-text);
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            
-            /* Градиент теплого океана из Minecraft */
-            background: linear-gradient(to right, var(--minecraft-warm-ocean), var(--minecraft-ocean-deep));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            z-index: 2;
-
-            /* Изначально вода полностью скрыта на самом дне букв */
-            clip-path: polygon(0% 100%, 12.5% 100%, 25% 100%, 37.5% 100%, 50% 100%, 62.5% 100%, 75% 100%, 87.5% 100%, 100% 100%, 100% 100%, 0% 100%);
-            
-            /* Плавное залитие снизу вверх при наведении */
-            transition: clip-path 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        /* ПРИ НАВЕДЕНИИ: Включаем скоростное волнение воды (всего 0.5 секунды на цикл) */
-        .logo-block:hover .logo-text::before {
-            animation: waveFast 0.5s linear infinite; /* Ускорили в 3 раза! */
-        }
-
-        /* Мягкое покачивание самих букв */
-        .logo-block:hover .logo-text {
-            animation: textWaveFloat 1.5s ease-in-out infinite alternate;
-        }
 
         /* Анимация движения глянцевого блика по буквам */
         @keyframes shineText {
