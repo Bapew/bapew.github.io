@@ -601,18 +601,16 @@
             
     </script>
 
-    <!-- БЛОК ТЕХНИЧЕСКИХ РАБОТ С ЛЕНТАМИ И ПРИВЯЗКОЙ ВРЕМЕНИ -->
+    <!-- БЛОК ТЕХНИЧЕСКИХ РАБОТ С ПРЯМЫМ ВЫВОДОМ ДАТЫ -->
     <div id="maintenance-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #0e1017; z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; color: #fff; padding: 20px; text-align: center; overflow: hidden;">
         
-        <!-- --- ЖЕЛТО-ЧЕРНЫЕ ПРЕДУПРЕДИТЕЛЬНЫЕ ЛЕНТЫ НА ФОНЕ --- -->
-        <!-- Лента 1: Слева направо по диагонали -->
-        <div style="position: absolute; width: 150%; height: 60px; top: 40%; left: -25%; transform: rotate(15deg); background: repeating-linear-gradient(-45deg, #f1c40f, #f1c40f 20px, #111 20px, #111 40px); opacity: 0.15; filter: blur(3px); z-index: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; white-space: nowrap; pointer-events: none;">
-            <span style="color: #000; font-weight: 900; font-size: 24px; letter-spacing: 5px; text-transform: uppercase;">ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ</span>
+        <!-- --- ЖЕЛТО-ГРАФИТОВЫЕ ПРЕДУПРЕДИТЕЛЬНЫЕ ЛЕНТЫ НА ФОНЕ --- -->
+        <div style="position: absolute; width: 150%; height: 60px; top: 40%; left: -25%; transform: rotate(15deg); background: repeating-linear-gradient(-45deg, #f1c40f, #f1c40f 25px, #2a2d37 25px, #2a2d37 50px); opacity: 0.25; filter: blur(1.5px); z-index: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; white-space: nowrap; pointer-events: none;">
+            <span style="color: #1a1c23; font-weight: 900; font-size: 22px; letter-spacing: 5px; text-transform: uppercase;">ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ</span>
         </div>
         
-        <!-- Лента 2: Справа налево по диагонали (скрещенная) -->
-        <div style="position: absolute; width: 150%; height: 60px; top: 45%; left: -25%; transform: rotate(-15deg); background: repeating-linear-gradient(-45deg, #f1c40f, #f1c40f 20px, #111 20px, #111 40px); opacity: 0.12; filter: blur(4px); z-index: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; white-space: nowrap; pointer-events: none;">
-            <span style="color: #000; font-weight: 900; font-size: 24px; letter-spacing: 5px; text-transform: uppercase;">ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ</span>
+        <div style="position: absolute; width: 150%; height: 60px; top: 45%; left: -25%; transform: rotate(-15deg); background: repeating-linear-gradient(-45deg, #f1c40f, #f1c40f 25px, #2a2d37 25px, #2a2d37 50px); opacity: 0.22; filter: blur(1.5px); z-index: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; white-space: nowrap; pointer-events: none;">
+            <span style="color: #1a1c23; font-weight: 900; font-size: 22px; letter-spacing: 5px; text-transform: uppercase;">ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ</span>
         </div>
 
         <!-- --- КОНТЕНТ (ПОВЕРХ ЛЕНТ) --- -->
@@ -639,6 +637,7 @@
                 <div id="maintenance-timer" style="font-size: 32px; font-weight: 800; font-family: monospace; letter-spacing: 1px;">
                     00:00:00
                 </div>
+                <!-- Сюда будет выводиться ваша строка один в один -->
                 <div id="target-date-display" style="font-size: 14px; font-family: monospace; color: rgba(255,255,255,0.4); letter-spacing: 0.5px;">
                     [....]
                 </div>
@@ -651,26 +650,17 @@
 
         <script>
             // --- НАСТРОЙКА ДАТЫ ОКОНЧАНИЯ РАБОТ ---
-            // Укажите точную дату окончания. Пример ниже: 15 августа 2026 года в 18:30 по МСК (GMT+0300)
-            const TARGET_DATE = "August 15, 2026 18:30:00 GMT+0300"; 
+            // Пишите сюда дату в любом удобном формате. Она отобразится под таймером один в один!
+            const TARGET_DATE = "August 2, 2026 18:00:00 GMT+0300"; 
 
             function initMaintenance() {
-                const targetObj = new Date(TARGET_DATE);
-                const countDownDate = targetObj.getTime();
+                const countDownDate = new Date(TARGET_DATE).getTime();
                 
                 const timerElement = document.getElementById('maintenance-timer');
                 const dateDisplayElement = document.getElementById('target-date-display');
 
-                // Автоматический вывод даты [ГГГГ.ММ.ДД:ЧЧ.ММ.СС]
-                const year = targetObj.getFullYear();
-                const month = String(targetObj.getMonth() + 1).padStart(2, '0');
-                const day = String(targetObj.getDate()).padStart(2, '0');
-                const hoursStr = String(targetObj.getHours()).padStart(2, '0');
-                const minutesStr = String(targetObj.getMinutes()).padStart(2, '0');
-                const secondsStr = String(targetObj.getSeconds()).padStart(2, '0');
-
-                // Отрисовываем отформатированную дату под таймером
-                dateDisplayElement.innerHTML = `[${year}.${month}.${day}:${hoursStr}.${minutesStr}.${secondsStr}]`;
+                // ИСПРАВЛЕНО: Выводим вашу строку из переменной без изменений в квадратных скобках
+                dateDisplayElement.innerHTML = `[${TARGET_DATE}]`;
 
                 const interval = setInterval(() => {
                     const now = new Date().getTime();
