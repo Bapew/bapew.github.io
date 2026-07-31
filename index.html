@@ -319,9 +319,10 @@
 
         
         .news-card {
-            background: transparent; /* Убрали темный квадрат */
-            border: none;            /* Убрали рамку */
-            padding: 10px 0;         /* Сделали аккуратные отступы */
+            background: var(--card-glass); 
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
         }
 
 
@@ -353,10 +354,10 @@
 
 
         .faq-item {
-            background: transparent; /* Убрали темный квадрат */
-            border: none;
-            border-bottom: 1px solid var(--border-color); /* Элегантная линия снизу */
-            margin-bottom: 5px;
+            background: var(--card-glass); 
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 15px;
             overflow: hidden;
         }
 
@@ -384,7 +385,7 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.15); /* Вернули легкое затемнение внутри ответа */
         }
 
         .faq-answer-content {
