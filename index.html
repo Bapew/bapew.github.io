@@ -309,13 +309,33 @@
     </header>
 
     <!-- ГЛАВНЫЙ ЭКРАН -->
+       <!-- ГЛАВНЫЙ ЭКРАН -->
     <section id="home" class="hero">
         <div class="container" style="display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap;">
             
+            <!-- Левая часть: Приветствие и Текст -->
             <div class="hero-content" style="flex: 1; min-width: 300px;">
                 <h1>Тёплый закат, горячие <span>игры</span></h1>
-                <p>Привет! Мы — независимая инди-студия Flash Studio. Разрабатываем уникальные и атмосферные игрыдля вас. Наша цель — подарить игрокам незабываемые эмоции и яркий визуальный стиль.</p>
-                <a href="#games" class="btn">Заглянуть в каталог</a>
+                <p>Привет! Мы — независимая инди-студия Flash Studio. Разрабатываем душевные и атмосферные игры под шум прибоя. Наша цель — подарить игрокам незабываемые эмоции и яркий визуальный стиль.</p>
+                
+                <!-- Блок кнопок и соцсетей -->
+                <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+                    <a href="#games" class="btn">Заглянуть в каталог</a>
+                    
+                    <!-- Ссылки на ваши сообщества -->
+                    <div style="display: flex; gap: 15px; margin-left: 10px;">
+                        <!-- Телеграм -->
+                        <a href="https://t.me" target="_blank" title="Telegram" style="color: var(--sunset-pink); text-decoration: none; font-size: 24px; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">📱</a>
+                        <!-- YouTube / VK / Discord (можете заменить эмодзи на нужные) -->
+                        <a href="#" target="_blank" title="Discord" style="color: var(--sunset-pink); text-decoration: none; font-size: 24px; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">💬</a>
+                    </div>
+                </div>
             </div>
 
+            <!-- Правая часть: Большой интерактивный логотип -->
             <div class="hero-image-container" style="flex: 1; min-width: 300px; display: flex; justify-content: center; animation: sunGlow 4s ease-in-out infinite alternate;">
+                <img src="logo.png" alt="FlashStudio Летний Арт" style="max-width: 100%; height: auto; max-height: 400px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); border: 2px solid var(--sunset-orange);">
+            </div>
+
+        </div>
+    </section>
