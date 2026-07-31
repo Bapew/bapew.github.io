@@ -15,8 +15,11 @@
     <link rel="stylesheet" href="https://cloudflare.com">
 
     <style>
-        /* --- 1. ПЕРЕМЕННЫЕ И ОСНОВА --- */
+        /* --- ЦВЕТ ТЁПЛОГО ОКЕАНА (МАЙНКРАФТ ВАЙБ) --- */
         :root {
+            /* Фирменные цвета поменялись под пляж, но для воды мы задаем сочную бирюзу */
+            --minecraft-warm-ocean: #00d2ff; 
+            --minecraft-ocean-deep: #00a8ff;
             --bg-sunset: #140d21;
             --sunset-orange: #ff7e5f;
             --sunset-pink: #feb47b;
@@ -112,7 +115,7 @@
             display: block;
         }
         
-        /* --- ЧЕСТНЫЙ ЭФФЕКТ ВОДЫ И БЛИКА --- */
+        /* --- ОБНОВЛЕННЫЙ ТЕКСТ ЛОГОТИПА С ЖИВЫМИ ВОЛНАМИ --- */
         .logo-text {
             font-family: 'Montserrat', sans-serif;
             font-size: 24px;
@@ -120,7 +123,7 @@
             letter-spacing: 0.5px;
             position: relative;
             display: inline-block;
-            line-height: 32px; /* Выравнивание по высоте картинки */
+            line-height: 32px;
             
             /* Базовый текст с постоянным поблёскиванием */
             background: linear-gradient(120deg, #fff 30%, var(--sunset-pink) 45%, #fff 55%, var(--sunset-pink) 70%);
@@ -130,7 +133,7 @@
             animation: shineText 6s linear infinite;
         }
 
-        /* Слой воды, поднимающийся снизу вверх ровно до половины */
+        /* Слой океанской воды внутри букв */
         .logo-text::before {
             content: attr(data-text);
             position: absolute;
@@ -138,24 +141,36 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to right, var(--sunset-orange), #ff416c);
+            
+            /* Градиент теплого океана (светло-бирюзовый переходит в насыщенный лазурный) */
+            background: linear-gradient(to right, var(--minecraft-warm-ocean), var(--minecraft-ocean-deep));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            
-            /* Маска, которая срезает воду. Изначально скрыта внизу (100% сверху) */
-            clip-path: inset(100% 0 0 0); 
-            transition: clip-path 0.25s ease-in-out;
             z-index: 2;
+
+            /* Изначально вода скрыта в самом низу (100% сверху) */
+            /* Маска в виде закругленной синусоиды (волны), которая плавно двигается */
+            clip-path: url(#wave-mask-hidden);
+            transition: clip-path 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* При наведении маска открывает нижнюю половину букв (вода на 50%) */
+        /* При наведении курсора вода мгновенно переключается на маску Анимированной Волны до середины букв */
         .logo-block:hover .logo-text::before {
-            clip-path: inset(50% 0 0 0); /* Срез идет ровно по середине */
+            animation: waveMotion 1.5s linear infinite; /* Запуск постоянного волнения слева направо */
         }
 
-        @keyframes shineText {
-            0% { background-position: 200% center; }
-            100% { background-position: -200% center; }
+        /* --- АНИМАЦИЯ ДВИЖЕНИЯ ВОЛНЫ СЛЕВА НАПРАВО --- */
+        @keyframes waveMotion {
+            0% {
+                /* clip-path использует форму волны, смещая её по горизонтали */
+                clip-path: polygon(0% 50%, 12.5% 46%, 25% 50%, 37.5% 54%, 50% 50%, 62.5% 46%, 75% 50%, 87.5% 54%, 100% 50%, 100% 100%, 0% 100%);
+            }
+            50% {
+                clip-path: polygon(0% 50%, 12.5% 54%, 25% 50%, 37.5% 46%, 50% 50%, 62.5% 54%, 75% 50%, 87.5% 46%, 100% 50%, 100% 100%, 0% 100%);
+            }
+            100% {
+                clip-path: polygon(0% 50%, 12.5% 46%, 25% 50%, 37.5% 54%, 50% 50%, 62.5% 46%, 75% 50%, 87.5% 54%, 100% 50%, 100% 100%, 0% 100%);
+            }
         }
         
         .nav-menu {
