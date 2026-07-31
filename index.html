@@ -88,12 +88,14 @@
             align-items: center;
             gap: 12px;
             text-decoration: none;
-            transition: transform 0.2s ease; /* Плавное увеличение всего блока */
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1); /* Плавное увеличение */
         }
-     
+
+        /* Эффект увеличения при наведении */
         .logo-block:hover {
             transform: scale(1.05);
         }
+     
 
         .logo-img {
             width: 40px;
@@ -101,45 +103,46 @@
             object-fit: contain;
         }
 
-        .logo-text {
-            font-family: 'Comfortaa', cursive;
-            font-size: 26px;
-            font-weight: 900; /* Сделали шрифт максимально жирным */
-            letter-spacing: 0.5px;
+         .logo-text {
+            font-family: 'Montserrat', sans-serif; /* ТОТ САМЫЙ ШРИФТ ЗАГЛОВКА */
+            font-size: 24px;
+            font-weight: 900; /* Максимально жирный сочный стиль */
+            letter-spacing: 1px;
             position: relative;
             display: inline-block;
-            color: rgba(255, 255, 255, 0.2); /* Базовый полупрозрачный цвет букв */
     
-            /* ЭФФЕКТ 1: Постоянное поблёскивание (блик) на буквах */
-            background: linear-gradient(120deg, #fff 30%, var(--sunset-pink) 40%, #fff 50%, var(--sunset-pink) 60%);
+            /* Базовый градиент с постоянным эффектом поблёскивания (блика) */
+            background: linear-gradient(120deg, #fff 30%, var(--sunset-pink) 45%, #fff 55%, var(--sunset-pink) 70%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shineText 5s linear infinite;
+            animation: shineText 6s linear infinite;
         }
 
-        /* ЭФФЕКТ 2: Жидкое наполнение водой при наведении */
+        /* ЭФФЕКТ ВОДЫ: Наполнение строго снизу вверх до середины */
         .logo-text::before {
             content: attr(data-text);
             position: absolute;
-            top: 0;
             left: 0;
+            bottom: 0; /* Прижали воду строго к нижнему краю букв */
             width: 100%;
-            height: 0; /* Изначально вода на дне (0%) */
-            background: linear-gradient(to right, var(--sunset-orange), var(--sunset-pink));
+            height: 0%; /* Изначально воды нет */
+    
+            /* Сочный закатный цвет наполняющей воды */
+            background: linear-gradient(to right, var(--sunset-orange), #ff416c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            border-bottom: 2px solid var(--sunset-orange); /* Кромка воды */
-            overflow: hidden;
-            transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Быстрое наполнение и уход */
+    
+            /* Скорость прилива и ухода воды */
+            transition: height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
         }
-
-        /* При наведении вода мгновенно поднимается ровно до середины текста (50%) */
+        /* При наведении вода мгновенно и ровно заполняет буквы до середины */
         .logo-block:hover .logo-text::before {
-            height: 52%; 
+            height: 50%; /* Ровно половина высоты шрифта Montserrat */
         }
 
-        /* --- АНИМАЦИЯ БЛИКА --- */
+        /* Анимация постоянного поблёскивания текста */
         @keyframes shineText {
             0% { background-position: 200% center; }
             100% { background-position: -200% center; }
