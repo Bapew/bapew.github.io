@@ -601,32 +601,48 @@
             
     </script>
 
-             <!-- БЛОК ТЕХНИЧЕСКИХ РАБОТ (С СЕРВЕРНОЙ ПРИВЯЗКОЙ ВРЕМЕНИ) -->
-    <div id="maintenance-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #12131a; z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; color: #fff; padding: 20px; text-align: center;">
+    <!-- БЛОК ТЕХНИЧЕСКИХ РАБОТ С ЛЕНТАМИ И ПРИВЯЗКОЙ ВРЕМЕНИ -->
+    <div id="maintenance-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #0e1017; z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; color: #fff; padding: 20px; text-align: center; overflow: hidden;">
         
-        <!-- Анимированные часы с вращающимися стрелками -->
-        <div style="position: relative; width: 100px; height: 100px; border: 4px solid #ff7e5f; border-radius: 50%; margin-bottom: 30px; box-shadow: 0 0 20px rgba(255, 126, 95, 0.3);">
-            <!-- Часовая стрелка -->
-            <div style="position: absolute; width: 4px; height: 30px; background: #fff; top: 20px; left: 44px; transform-origin: bottom center; border-radius: 4px; animation: clockRotate 12s linear infinite;"></div>
-            <!-- Минутная стрелка -->
-            <div style="position: absolute; width: 3px; height: 40px; background: #feb47b; top: 10px; left: 44.5px; transform-origin: bottom center; border-radius: 4px; animation: clockRotate 1s linear infinite;"></div>
-            <!-- Точка в центре -->
-            <div style="position: absolute; width: 8px; height: 8px; background: #ff7e5f; border-radius: 50%; top: 42px; left: 42px;"></div>
+        <!-- --- ЖЕЛТО-ЧЕРНЫЕ ПРЕДУПРЕДИТЕЛЬНЫЕ ЛЕНТЫ НА ФОНЕ --- -->
+        <!-- Лента 1: Слева направо по диагонали -->
+        <div style="position: absolute; width: 150%; height: 60px; top: 40%; left: -25%; transform: rotate(15deg); background: repeating-linear-gradient(-45deg, #f1c40f, #f1c40f 20px, #111 20px, #111 40px); opacity: 0.15; filter: blur(3px); z-index: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; white-space: nowrap; pointer-events: none;">
+            <span style="color: #000; font-weight: 900; font-size: 24px; letter-spacing: 5px; text-transform: uppercase;">ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ</span>
+        </div>
+        
+        <!-- Лента 2: Справа налево по диагонали (скрещенная) -->
+        <div style="position: absolute; width: 150%; height: 60px; top: 45%; left: -25%; transform: rotate(-15deg); background: repeating-linear-gradient(-45deg, #f1c40f, #f1c40f 20px, #111 20px, #111 40px); opacity: 0.12; filter: blur(4px); z-index: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; white-space: nowrap; pointer-events: none;">
+            <span style="color: #000; font-weight: 900; font-size: 24px; letter-spacing: 5px; text-transform: uppercase;">ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ</span>
         </div>
 
-        <h1 style="font-size: 36px; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 2px;">
-            <span style="background: linear-gradient(to right, #ff7e5f, #feb47b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">FLASH STUDIO</span>
-        </h1>
-        
-        <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 20px; color: #ff7e5f;">Технические работы</h2>
-        
-        <p style="max-width: 500px; font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.7); margin-bottom: 40px;">
-            На данный момент на сайте проводятся технические работы и доступ к нему ограничен. Мы скоро вернемся с обновленным и полностью рабочим интерфейсом!
-        </p>
+        <!-- --- КОНТЕНТ (ПОВЕРХ ЛЕНТ) --- -->
+        <div style="position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center;">
+            <!-- Анимированные часы -->
+            <div style="position: relative; width: 100px; height: 100px; border: 4px solid #ff7e5f; border-radius: 50%; margin-bottom: 30px; box-shadow: 0 0 20px rgba(255, 126, 95, 0.3); background: rgba(14,16,23,0.6); backdrop-filter: blur(5px);">
+                <div style="position: absolute; width: 4px; height: 30px; background: #fff; top: 20px; left: 44px; transform-origin: bottom center; border-radius: 4px; animation: clockRotate 12s linear infinite;"></div>
+                <div style="position: absolute; width: 3px; height: 40px; background: #feb47b; top: 10px; left: 44.5px; transform-origin: bottom center; border-radius: 4px; animation: clockRotate 1s linear infinite;"></div>
+                <div style="position: absolute; width: 8px; height: 8px; background: #ff7e5f; border-radius: 50%; top: 42px; left: 42px;"></div>
+            </div>
 
-        <!-- Таймер обратного отсчета -->
-        <div id="maintenance-timer" style="font-size: 28px; font-weight: 800; font-family: monospace; letter-spacing: 1px; background: rgba(255,255,255,0.03); padding: 15px 30px; border-radius: 10px; border: 1px solid rgba(255,126,95,0.2);">
-            00:00:00
+            <h1 style="font-size: 36px; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 2px;">
+                <span style="background: linear-gradient(to right, #ff7e5f, #feb47b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">FLASH STUDIO</span>
+            </h1>
+            
+            <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 20px; color: #ff7e5f;">Технические работы</h2>
+            
+            <p style="max-width: 500px; font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.7); margin-bottom: 40px;">
+                На данный момент на сайте проводятся технические работы и доступ к нему ограничен. Мы скоро вернемся с обновленным и полностью рабочим интерфейсом!
+            </p>
+
+            <!-- Контейнер для таймера и даты -->
+            <div style="background: rgba(255,255,255,0.02); backdrop-filter: blur(8px); padding: 20px 35px; border-radius: 12px; border: 1px solid rgba(255,126,95,0.2); display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                <div id="maintenance-timer" style="font-size: 32px; font-weight: 800; font-family: monospace; letter-spacing: 1px;">
+                    00:00:00
+                </div>
+                <div id="target-date-display" style="font-size: 14px; font-family: monospace; color: rgba(255,255,255,0.4); letter-spacing: 0.5px;">
+                    [....]
+                </div>
+            </div>
         </div>
 
         <style>
@@ -635,22 +651,31 @@
 
         <script>
             // --- НАСТРОЙКА ДАТЫ ОКОНЧАНИЯ РАБОТ ---
-            // Укажите точное время, КОГДА таймер должен завершиться.
-            // Формат строго английский: "Месяц День, Год Часы:Минуты:Секунды"
-            // Пример ниже: 1 августа 2026 года в 15:00:00
-            const TARGET_DATE = "August 1, 2026 16:00:00 GMT+0300";
+            // Укажите точную дату окончания. Пример ниже: 15 августа 2026 года в 18:30 по МСК (GMT+0300)
+            const TARGET_DATE = "August 15, 2026 18:30:00 GMT+0300"; 
 
-            function startServerTimer() {
-                // Превращаем текст даты в математическое число миллисекунд
-                const countDownDate = new Date(TARGET_DATE).getTime();
+            function initMaintenance() {
+                const targetObj = new Date(TARGET_DATE);
+                const countDownDate = targetObj.getTime();
+                
                 const timerElement = document.getElementById('maintenance-timer');
+                const dateDisplayElement = document.getElementById('target-date-display');
 
-                // Запускаем ежесекундный перерасчёт
+                // Автоматический вывод даты [ГГГГ.ММ.ДД:ЧЧ.ММ.СС]
+                const year = targetObj.getFullYear();
+                const month = String(targetObj.getMonth() + 1).padStart(2, '0');
+                const day = String(targetObj.getDate()).padStart(2, '0');
+                const hoursStr = String(targetObj.getHours()).padStart(2, '0');
+                const minutesStr = String(targetObj.getMinutes()).padStart(2, '0');
+                const secondsStr = String(targetObj.getSeconds()).padStart(2, '0');
+
+                // Отрисовываем отформатированную дату под таймером
+                dateDisplayElement.innerHTML = `[${year}.${month}.${day}:${hoursStr}.${minutesStr}.${secondsStr}]`;
+
                 const interval = setInterval(() => {
                     const now = new Date().getTime();
                     const distance = countDownDate - now;
 
-                    // Если указанное время наступило или уже прошло
                     if (distance < 0) {
                         clearInterval(interval);
                         timerElement.innerHTML = "В ближайшее время";
@@ -659,12 +684,10 @@
                         return;
                     }
 
-                    // Стандартный расчёт остатка по мировому времени
                     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                    // Дописываем нули перед цифрами, если они меньше 10
                     const displayHours = hours < 10 ? "0" + hours : hours;
                     const displayMinutes = minutes < 10 ? "0" + minutes : minutes;
                     const displaySeconds = seconds < 10 ? "0" + seconds : seconds;
@@ -673,8 +696,7 @@
                 }, 1000);
             }
 
-            // Запуск независимого таймера
-            startServerTimer();
+            initMaintenance();
         </script>
     </div>
          
