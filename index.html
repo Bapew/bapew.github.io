@@ -601,5 +601,82 @@
             
     </script>
 
+             <!-- БЛОК ТЕХНИЧЕСКИХ РАБОТ (С СЕРВЕРНОЙ ПРИВЯЗКОЙ ВРЕМЕНИ) -->
+    <div id="maintenance-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #12131a; z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; color: #fff; padding: 20px; text-align: center;">
+        
+        <!-- Анимированные часы с вращающимися стрелками -->
+        <div style="position: relative; width: 100px; height: 100px; border: 4px solid #ff7e5f; border-radius: 50%; margin-bottom: 30px; box-shadow: 0 0 20px rgba(255, 126, 95, 0.3);">
+            <!-- Часовая стрелка -->
+            <div style="position: absolute; width: 4px; height: 30px; background: #fff; top: 20px; left: 44px; transform-origin: bottom center; border-radius: 4px; animation: clockRotate 12s linear infinite;"></div>
+            <!-- Минутная стрелка -->
+            <div style="position: absolute; width: 3px; height: 40px; background: #feb47b; top: 10px; left: 44.5px; transform-origin: bottom center; border-radius: 4px; animation: clockRotate 1s linear infinite;"></div>
+            <!-- Точка в центре -->
+            <div style="position: absolute; width: 8px; height: 8px; background: #ff7e5f; border-radius: 50%; top: 42px; left: 42px;"></div>
+        </div>
+
+        <h1 style="font-size: 36px; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 2px;">
+            <span style="background: linear-gradient(to right, #ff7e5f, #feb47b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">FLASH STUDIO</span>
+        </h1>
+        
+        <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 20px; color: #ff7e5f;">Технические работы</h2>
+        
+        <p style="max-width: 500px; font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.7); margin-bottom: 40px;">
+            На данный момент на сайте проводятся технические работы и доступ к нему ограничен. Мы скоро вернемся с обновленным и полностью рабочим интерфейсом!
+        </p>
+
+        <!-- Таймер обратного отсчета -->
+        <div id="maintenance-timer" style="font-size: 28px; font-weight: 800; font-family: monospace; letter-spacing: 1px; background: rgba(255,255,255,0.03); padding: 15px 30px; border-radius: 10px; border: 1px solid rgba(255,126,95,0.2);">
+            00:00:00
+        </div>
+
+        <style>
+            @keyframes clockRotate { 100% { transform: rotate(360deg); } }
+        </style>
+
+        <script>
+            // --- НАСТРОЙКА ДАТЫ ОКОНЧАНИЯ РАБОТ ---
+            // Укажите точное время, КОГДА таймер должен завершиться.
+            // Формат строго английский: "Месяц День, Год Часы:Минуты:Секунды"
+            // Пример ниже: 1 августа 2026 года в 15:00:00
+            const TARGET_DATE = "August 1, 2026 16:00:00 GMT+0300";
+
+            function startServerTimer() {
+                // Превращаем текст даты в математическое число миллисекунд
+                const countDownDate = new Date(TARGET_DATE).getTime();
+                const timerElement = document.getElementById('maintenance-timer');
+
+                // Запускаем ежесекундный перерасчёт
+                const interval = setInterval(() => {
+                    const now = new Date().getTime();
+                    const distance = countDownDate - now;
+
+                    // Если указанное время наступило или уже прошло
+                    if (distance < 0) {
+                        clearInterval(interval);
+                        timerElement.innerHTML = "В ближайшее время";
+                        timerElement.style.color = "#feb47b";
+                        timerElement.style.fontSize = "22px";
+                        return;
+                    }
+
+                    // Стандартный расчёт остатка по мировому времени
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    // Дописываем нули перед цифрами, если они меньше 10
+                    const displayHours = hours < 10 ? "0" + hours : hours;
+                    const displayMinutes = minutes < 10 ? "0" + minutes : minutes;
+                    const displaySeconds = seconds < 10 ? "0" + seconds : seconds;
+
+                    timerElement.innerHTML = `${displayHours}:${displayMinutes}:${displaySeconds}`;
+                }, 1000);
+            }
+
+            // Запуск независимого таймера
+            startServerTimer();
+        </script>
+    </div>
+         
 </body>
 </html>
