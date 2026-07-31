@@ -5,21 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlashStudio | Indie Game Dev</title>
     
-    <!-- Подключаем геймерские современные шрифты -->
+    <!-- Иконка вкладки (используем ваш логотип) -->
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <!-- Летние и стильные шрифты -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Orbitron:wght@500;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com/css2?family=Comfortaa:wght@700&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        /* --- 1. ПЕРЕМЕННЫЕ И ОСНОВА (ГЕЙМЕРСКАЯ ТЕМА) --- */
+        /* --- 1. ПЛЯЖНАЯ ЗАКАДРОВАЯ ТЕМА --- */
         :root {
-            --bg-dark: #060814;
-            --bg-card: rgba(14, 18, 36, 0.7);
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --neon-cyan: #00f2fe;    /* Кибер-бирюзовый */
-            --neon-pink: #fe019a;    /* Неоново-розовый */
-            --border-glow: rgba(0, 242, 254, 0.15);
+            --bg-sunset: #181125;        /* Ночное закатное небо */
+            --sunset-orange: #ff7e5f;    /* Теплый оранжевый */
+            --sunset-pink: #feb47b;      /* Нежный персиковый */
+            --accent-purple: #6a11cb;    /* Фиолетовый неон */
+            --text-light: #fff5f0;
+            --card-glass: rgba(36, 24, 54, 0.6);
         }
 
         * {
@@ -30,13 +32,13 @@
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 18px;
+            background-color: var(--bg-sunset);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
-            /* Космический задний фон */
-            background-image: radial-gradient(circle at 50% 50%, #11142a 0%, #060814 100%);
+            /* Градиент настоящего морского заката */
+            background-image: linear-gradient(to bottom, #140d21 0%, #3b1b42 40%, #78354b 70%, #bd5a4b 100%);
+            background-attachment: fixed;
         }
 
         .container {
@@ -45,14 +47,15 @@
             padding: 0 20px;
         }
 
-        /* --- 2. НАВИГАЦИЯ (МЕНЮ) --- */
+        /* --- 2. ШАПКА СО СКРУГЛЕННЫМ ЛОГОТИПОМ --- */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(0, 242, 254, 0.2);
+            background: rgba(20, 13, 33, 0.5);
+            border-bottom: 1px solid rgba(255, 126, 95, 0.2);
             z-index: 100;
         }
 
@@ -63,30 +66,46 @@
             height: 80px;
         }
 
-        /* Анимированный неоновый логотип */
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: 2px;
+        /* Блок логотипа: аватарка + текст */
+        .logo-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%; /* Идеальное скругление в круг */
+            object-fit: cover;
+            border: 2px solid var(--sunset-orange);
+            box-shadow: 0 0 15px rgba(255, 126, 95, 0.5);
+        }
+
+        .logo-text {
+            font-family: 'Comfortaa', cursive;
+            font-size: 24px;
+            font-weight: 700;
             color: #fff;
-            text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
-            animation: pulseGlow 2.5s infinite alternate;
+            letter-spacing: -0.5px;
+            background: linear-gradient(45deg, #fff, var(--sunset-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .nav-links a {
-            color: var(--text-main);
+            color: var(--text-light);
             text-decoration: none;
-            margin-left: 35px;
+            margin-left: 30px;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 15px;
             transition: all 0.3s;
         }
 
         .nav-links a:hover {
-            color: var(--neon-pink);
-            text-shadow: 0 0 10px var(--neon-pink);
+            color: var(--sunset-orange);
+            text-shadow: 0 0 10px rgba(255, 126, 95, 0.6);
         }
 
         /* --- 3. ГЛАВНЫЙ ЭКРАН (HERO) --- */
@@ -98,205 +117,179 @@
             padding-top: 80px;
         }
 
-        /* Светящиеся сферы на фоне */
+        /* Огромное заходящее солнце на заднем плане */
         .hero::before {
             content: '';
             position: absolute;
-            top: 25%;
-            left: 10%;
-            width: 250px;
-            height: 250px;
-            background: var(--neon-pink);
-            filter: blur(130px);
-            opacity: 0.25;
+            bottom: 10%;
+            right: 5%;
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(to top, var(--sunset-orange), #ff416c);
+            filter: blur(20px);
+            opacity: 0.4;
             border-radius: 50%;
+            z-index: -1;
+            animation: sunGlow 4s infinite alternate ease-in-out;
         }
 
         .hero-content {
-            max-width: 700px;
-            animation: glitchAppear 0.8s ease-out forwards;
-        }
-
-        .hero-tag {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--neon-cyan);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-size: 14px;
-            margin-bottom: 15px;
-            display: inline-block;
+            max-width: 650px;
+            animation: fadeIn 1s ease-out;
         }
 
         .hero h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 64px;
+            font-size: 58px;
             font-weight: 800;
-            line-height: 1;
-            margin-bottom: 25px;
-            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 20px;
         }
 
         .hero h1 span {
-            color: transparent;
-            -webkit-text-stroke: 1px var(--neon-pink);
-            filter: drop-shadow(0 0 15px var(--neon-pink));
+            color: var(--sunset-orange);
+            background: linear-gradient(to right, var(--sunset-orange), var(--sunset-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            color: var(--text-muted);
-            font-size: 20px;
+            font-size: 18px;
             line-height: 1.6;
-            margin-bottom: 40px;
+            color: rgba(255, 245, 240, 0.8);
+            margin-bottom: 35px;
         }
 
-        /* Кнопка в стиле игровой панели */
+        /* Закатная кнопка */
         .btn {
             display: inline-block;
-            padding: 16px 36px;
-            background: transparent;
-            color: #fff;
-            border: 2px solid var(--neon-cyan);
-            font-family: 'Orbitron', sans-serif;
+            padding: 15px 35px;
+            background: linear-gradient(45deg, var(--sunset-orange), #ff416c);
+            color: white;
             text-decoration: none;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 2px;
-            border-radius: 4px;
+            border-radius: 30px; /* Скругленная летняя кнопка */
+            font-weight: 700;
+            letter-spacing: 0.5px;
             transition: all 0.3s ease;
-            box-shadow: 0 0 15px var(--border-glow);
-            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 126, 95, 0.4);
         }
 
         .btn:hover {
-            background: var(--neon-cyan);
-            color: var(--bg-dark);
-            box-shadow: 0 0 30px var(--neon-cyan);
-            transform: scale(1.05);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 126, 95, 0.7);
         }
 
-        /* --- 4. НАШИ ИГРЫ (КАРТОЧКИ) --- */
+        /* --- 4. СЕКЦИЯ ИГР --- */
         .section {
-            padding: 120px 0;
+            padding: 100px 0;
         }
 
         .section-title {
-            font-family: 'Orbitron', sans-serif;
             text-align: center;
-            font-size: 42px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 70px;
+            font-size: 38px;
+            font-weight: 800;
+            margin-bottom: 60px;
         }
 
         .section-title span {
-            color: var(--neon-cyan);
+            color: var(--sunset-pink);
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
         }
 
-        /* Игровая карточка */
+        /* Матовые карточки "под стекло" */
         .game-card {
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+            background: var(--card-glass);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
             padding: 25px;
-            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-            position: relative;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .game-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: var(--neon-pink);
-            box-shadow: 0 15px 35px rgba(254, 1, 154, 0.2);
+            transform: translateY(-10px);
+            border-color: var(--sunset-orange);
+            box-shadow: 0 15px 35px rgba(255, 126, 95, 0.2);
         }
 
-        /* Заглушка под постер игры */
         .game-img {
             width: 100%;
-            height: 200px;
-            background: #0f1326;
-            border-radius: 8px;
+            height: 190px;
+            background: rgba(20, 13, 33, 0.6);
+            border-radius: 12px;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #3b4261;
-            font-family: 'Orbitron', sans-serif;
+            color: rgba(255, 255, 255, 0.2);
             font-size: 14px;
-            border: 1px dashed rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            border: 1px dashed rgba(255, 126, 95, 0.3);
         }
 
-        /* Игровой статус (Тэг) */
         .status-badge {
-            position: absolute;
-            top: 40px;
-            right: 40px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid var(--neon-cyan);
-            color: var(--neon-cyan);
+            display: inline-block;
+            background: rgba(255, 126, 95, 0.15);
+            color: var(--sunset-pink);
             padding: 4px 12px;
             font-size: 12px;
-            text-transform: uppercase;
-            font-family: 'Orbitron', sans-serif;
-            border-radius: 4px;
+            font-weight: 700;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 126, 95, 0.3);
         }
 
         .game-card h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        .game-meta {
-            font-size: 14px;
-            color: var(--neon-cyan);
-            margin-bottom: 15px;
-            text-transform: uppercase;
         }
 
         .game-card p {
-            color: var(--text-muted);
-            font-size: 16px;
+            color: rgba(255, 245, 240, 0.7);
+            font-size: 15px;
             line-height: 1.5;
         }
 
         /* --- 5. ФУТЕР --- */
         footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 50px 0;
+            border-top: 1px solid rgba(255, 126, 95, 0.1);
+            padding: 40px 0;
             text-align: center;
-            color: var(--text-muted);
-            font-size: 15px;
+            color: rgba(255, 245, 240, 0.4);
+            font-size: 14px;
         }
 
         /* --- 6. АНИМАЦИИ --- */
-        @keyframes pulseGlow {
-            from { text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px rgba(0,242,254,0.4); }
-            to { text-shadow: 0 0 15px var(--neon-cyan), 0 0 35px var(--neon-cyan), 0 0 40px var(--neon-pink); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes glitchAppear {
-            0% { opacity: 0; transform: translateY(20px); filter: hue-rotate(90deg); }
-            100% { opacity: 1; transform: translateY(0); filter: hue-rotate(0deg); }
+        @keyframes sunGlow {
+            from { transform: scale(1); filter: blur(20px); opacity: 0.4; }
+            to { transform: scale(1.1); filter: blur(30px); opacity: 0.5; }
         }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 44px; }
+            .hero h1 { font-size: 38px; }
             .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- МЕНЮ -->
+    <!-- ШАПКА -->
     <header>
         <div class="container nav-container">
-            <div class="logo">FLASH STUDIO</div>
+            <!-- Блок со скруглённым логотипом -->
+            <a href="#home" class="logo-block">
+                <img src="logo.png" alt="FlashStudio" class="logo-img">
+                <div class="logo-text">FLASH STUDIO</div>
+            </a>
             <nav class="nav-links">
                 <a href="#home">Главная</a>
                 <a href="#games">Наши Игры</a>
@@ -309,21 +302,21 @@
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
-                <span class="hero-tag">Независимая инди-студия</span>
-                <h1>Мы создаем <span>миры</span></h1>
-                <p>Добро пожаловать на базу Flash Studio. Мы — небольшая команда, которая мечтает творить. Делаем упор на уникальный геймплей, цепляющую атмосферу и крутой визуальный стиль. Никаких рамок, только чистый полет фантазии.</p>
-                <a href="#games" class="btn">Ворваться в игры</a>
+                <h1>Тёплый закат, горячие <span>игры</span></h1>
+                <p>Привет! Мы — независимая инди-студия Flash Studio. Разрабатываем уникальные и атмосферные игры. Наша цель — подарить игрокам незабываемые эмоции и яркий визуальный стиль.</p>
+                <a href="#games" class="btn">Заглянуть в каталог</a>
             </div>
         </div>
     </section>
 
-    <!-- БЛОК С ИГРАМИ -->
+    <!-- ИГРЫ -->
     <section id="games" class="section">
         <div class="container">
-            <h2 class="section-title">Наши <span>Проекты</span></h2>
+            <h2 class="section-title">Летние <span>Релизы</span></h2>
             
             <div class="grid">
                 
-                <!-- ИГРА 1 -->
                 <div class="game-card">
-                    <span class="status-badge" style="border-color: #ff9f43; color: #ff9f43;">В РАЗРАБОТКЕ</span>
+                    <span class="status-badge">Скоро релиз</span>
+                    <div class="game-img">МЕСТО ДЛЯ СКРИНШОТА</div>
+                    <h3>Final bell</h3>
