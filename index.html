@@ -317,12 +317,13 @@
             .news-grid { grid-template-columns: 1fr; }
         }
 
+        
         .news-card {
-            background: var(--card-glass);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
+            background: transparent; /* Убрали темный квадрат */
+            border: none;            /* Убрали рамку */
+            padding: 10px 0;         /* Сделали аккуратные отступы */
         }
+
 
         .news-img {
             width: 100%;
@@ -350,11 +351,12 @@
             margin: 0 auto;
         }
 
+
         .faq-item {
-            background: var(--card-glass);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            margin-bottom: 15px;
+            background: transparent; /* Убрали темный квадрат */
+            border: none;
+            border-bottom: 1px solid var(--border-color); /* Элегантная линия снизу */
+            margin-bottom: 5px;
             overflow: hidden;
         }
 
