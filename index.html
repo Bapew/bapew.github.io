@@ -422,6 +422,8 @@
             .nav-menu { display: none; }
         }
     </style>
+    <!-- Подключаем библиотеку Supabase -->
+    <script src="https://jsdelivr.net"></script>
 </head>
 <body>
 
@@ -438,6 +440,10 @@
                     <a href="#games">Игры</a>
                     <a href="#news">Новости</a>
                 </nav>
+                <!-- НОВАЯ КНОПКА АВТОРИЗАЦИИ -->
+                <button id="discord-auth-btn" class="btn" style="padding: 8px 18px; font-size: 14px; border-radius: 20px; cursor: pointer; border: none; font-family: 'Montserrat', sans-serif;">
+                    <i class="fa-brands fa-discord"></i> Войти
+                </button>
                 <div class="nav-socials">
                     <a href="https://t.me" target="_blank" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
                     <a href="#" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
@@ -550,6 +556,45 @@
     </footer>
 
     <script>
+        // Инициализация Supabase
+        const SUPABASE_URL = "https://https://nlgjauqrtalbqkrrrhbx.supabase.co.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5sZ2phdXFydGFsYnFrcnJyaGJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0ODc1MDEsImV4cCI6MjEwMTA2MzUwMX0.vD6RBCi6FRZWPZ5ox48s3JlaDT2tunrGDmxWO9ylBSI";
+        const supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Функция входа через Discord
+        async function loginWithDiscord() {
+            const { data, error } = await supabase.auth.signInWithOAuth({
+                provider: 'discord',
+            });
+            if (error) console.error("Ошибка входа:", error.message);
+        }
+
+        // Функция выхода из аккаунта
+        async function logout() {
+            const { error } = await supabase.auth.signOut();
+            window.location.reload();
+        }
+
+        // Проверка: вошел ли пользователь на сайт?
+        async function checkUser() {
+            const { data: { user } } = await supabase.auth.getUser();
+            const loginBtn = document.getElementById('discord-auth-btn');
+            
+            if (user) {
+                // Если пользователь вошел, меняем кнопку меню на его аватарку и имя
+                loginBtn.innerHTML = `👋 ${user.user_metadata.full_name} | Выйти`;
+                loginBtn.onclick = logout;
+                loginBtn.style.background = "rgba(255, 65, 108, 0.3)";
+            } else {
+                // Если не вошел, оставляем кнопку входа
+                loginBtn.innerHTML = `<i class="fa-brands fa-discord"></i> Войти`;
+                loginBtn.onclick = loginWithDiscord;
+            }
+        }
+
+        // Запускаем проверку при каждой загрузке страницы
+        document.addEventListener('DOMContentLoaded', checkUser);
+
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const item = question.parentElement;
