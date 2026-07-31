@@ -64,7 +64,7 @@
             color: var(--sunset-pink);
         }
 
-        /* --- 2. ШАПКА САЙТА --- */
+        /* --- ФИКС НАВИГАЦИИ (СТРОГО В ОДНУ ЛИНИЮ) --- */
         header {
             position: fixed;
             top: 0;
@@ -83,35 +83,46 @@
             height: 80px;
         }
 
-         .logo-block {
+                /* Контейнер-фиксатор для предотвращения съезжания текста */
+        .logo-link {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            width: 300px; /* Фиксированная ширина зоны логотипа, чтобы меню не прыгало */
+        }
+
+        .logo-block {
             display: flex;
             align-items: center;
             gap: 12px;
             text-decoration: none;
-            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1); /* Плавное увеличение */
+            transform-origin: left center; /* Увеличение происходит строго из левой точки, без сдвигов */
+            transition: transform 0.25s ease-in-out;
         }
 
-        /* Эффект увеличения при наведении */
+        /* Текст плавно увеличивается на месте при наведении */
         .logo-block:hover {
             transform: scale(1.05);
         }
      
-
         .logo-img {
-            width: 40px;
-            height: 40px;
+            height: 32px;
+            width: auto;
             object-fit: contain;
+            display: block;
         }
-
-         .logo-text {
-            font-family: 'Montserrat', sans-serif; /* ТОТ САМЫЙ ШРИФТ ЗАГЛОВКА */
+        
+        /* --- ЧЕСТНЫЙ ЭФФЕКТ ВОДЫ И БЛИКА --- */
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
             font-size: 24px;
-            font-weight: 900; /* Максимально жирный сочный стиль */
-            letter-spacing: 1px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
             position: relative;
             display: inline-block;
-    
-            /* Базовый градиент с постоянным эффектом поблёскивания (блика) */
+            line-height: 32px; /* Выравнивание по высоте картинки */
+            
+            /* Базовый текст с постоянным поблёскиванием */
             background: linear-gradient(120deg, #fff 30%, var(--sunset-pink) 45%, #fff 55%, var(--sunset-pink) 70%);
             background-size: 200% auto;
             -webkit-background-clip: text;
@@ -119,30 +130,29 @@
             animation: shineText 6s linear infinite;
         }
 
-        /* ЭФФЕКТ ВОДЫ: Наполнение строго снизу вверх до середины */
+        /* Слой воды, поднимающийся снизу вверх ровно до половины */
         .logo-text::before {
             content: attr(data-text);
             position: absolute;
             left: 0;
-            bottom: 0; /* Прижали воду строго к нижнему краю букв */
+            top: 0;
             width: 100%;
-            height: 0%; /* Изначально воды нет */
-    
-            /* Сочный закатный цвет наполняющей воды */
+            height: 100%;
             background: linear-gradient(to right, var(--sunset-orange), #ff416c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-    
-            /* Скорость прилива и ухода воды */
-            transition: height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Маска, которая срезает воду. Изначально скрыта внизу (100% сверху) */
+            clip-path: inset(100% 0 0 0); 
+            transition: clip-path 0.25s ease-in-out;
             z-index: 2;
         }
-        /* При наведении вода мгновенно и ровно заполняет буквы до середины */
+        
+        /* При наведении маска открывает нижнюю половину букв (вода на 50%) */
         .logo-block:hover .logo-text::before {
-            height: 50%; /* Ровно половина высоты шрифта Montserrat */
+            clip-path: inset(50% 0 0 0); /* Срез идет ровно по середине */
         }
 
-        /* Анимация постоянного поблёскивания текста */
         @keyframes shineText {
             0% { background-position: 200% center; }
             100% { background-position: -200% center; }
@@ -151,8 +161,8 @@
         .nav-menu {
             display: flex;
             align-items: center;
-              gap: 25px;
-           }
+            gap: 25px;
+        }
 
         .nav-links a {
             color: var(--text-light);
@@ -488,15 +498,15 @@
 </head>
 <body>
 
-    <header>
- <a href="#home" class="logo-block">
-    <!-- Иконка увеличена и выровнена по высоте текста -->
-    <img src="images/logo.png" alt="💣" class="logo-img" style="height: 32px; width: auto; object-fit: contain; display: block;">
-    <!-- Текст-логотип с поддержкой водного эффекта -->
-    <div class="logo-text" data-text="FLASH STUDIO">FLASH STUDIO</div>
-</a>
-
-            </a>
+     <header>
+        <div class="container nav-container">
+            <!-- Исправленный блок логотипа -->
+            <div class="logo-link">
+                <a href="#home" class="logo-block">
+                    <img src="images/logo.png" alt="💣" class="logo-img">
+                    <span class="logo-text" data-text="FLASH STUDIO">FLASH STUDIO</span>
+                </a>
+            </div>
             
             <div class="nav-menu">
                 <nav class="nav-links">
@@ -504,7 +514,6 @@
                     <a href="#games">Игры</a>
                     <a href="#news">Новости</a>
                 </nav>
-                
                 <div class="nav-socials">
                     <a href="https://t.me" target="_blank" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
                     <a href="#" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
