@@ -90,7 +90,6 @@
             text-decoration: none;
         }
 
-        /* Лого-граната без фона (предполагается png) */
         .logo-img {
             width: 40px;
             height: 40px;
@@ -144,7 +143,6 @@
             color: var(--sunset-pink);
             transform: scale(1.15);
         }
-
         /* --- 3. ГЛАВНАЯ СТРАНИЦА (HERO) --- */
         .hero {
             min-height: 100vh;
@@ -217,7 +215,6 @@
             border-color: var(--sunset-orange);
         }
 
-        /* Мета-информация (Статус и Версия) сверху */
         .product-meta {
             display: flex;
             justify-content: space-between;
@@ -239,7 +236,6 @@
             color: rgba(255, 255, 255, 0.4);
         }
 
-        /* Квадратная иконка игры */
         .product-img {
             width: 100%;
             aspect-ratio: 1 / 1;
@@ -257,7 +253,6 @@
             text-align: center;
         }
 
-        /* Кнопка с ценой */
         .price-btn {
             display: block;
             width: 100%;
@@ -283,10 +278,10 @@
             margin-bottom: 12px;
         }
 
-        /* Иконки магазинов (белые, без фона) */
         .store-icons {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 14px;
             font-size: 18px;
             color: rgba(255, 255, 255, 0.7);
@@ -307,7 +302,6 @@
             font-size: 11px;
             font-weight: 800;
             letter-spacing: -0.5px;
-            line-height: 18px;
         }
 
         /* --- 5. ЛЕНТА НОВОСТЕЙ (16:9) --- */
@@ -328,7 +322,6 @@
             padding: 20px;
         }
 
-        /* Картинка строго 16:9 */
         .news-img {
             width: 100%;
             aspect-ratio: 16 / 9;
@@ -365,51 +358,230 @@
 
         .faq-question {
             display: flex;
-
-     align-items: center;
+            align-items: center;
             padding: 20px;
-            font-weight: 600;cursor: pointer;
+            font-weight: 600;
+            cursor: pointer;
             user-select: none;
             transition: background 0.3s;
-            
         }
-        
-        .faq-question:hover {background: rgba(255,255,255,0.02);
-                             }
-        /* Иконка стрелочки */.faq-icon {margin-right: 15px;
-                                         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                                         color: var(--sunset-orange);
-                                        
-                                        }
-       
-        /* Скрытый по умолчанию ответ */.faq-answer 
-        
-        {
-            
+
+        .faq-question:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .faq-icon {
+            margin-right: 15px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--sunset-orange);
+        }
+
+        .faq-answer {
             max-height: 0;
-            overflow: hidden;transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                                                     background: rgba(0, 0, 0, 0.1);
-     
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(0, 0, 0, 0.1);
         }
-        
-        .faq-answer-content {padding: 20px;color: rgba(255,255,255,0.7);
-                             line-height: 1.6;font-size: 15px;border-top: 1px solid rgba(255,255,255,0.02);
-                            
-                            }
-        
-        /* Классы для анимации через JS /.faq-item.active .faq-icon {transform: rotate(90deg);
-        / Стрелка поворачивается вниз */
-      
+
+        .faq-answer-content {
+            padding: 20px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+            font-size: 15px;
+            border-top: 1px solid rgba(255,255,255,0.02);
         }
-        .faq-item.active .faq-answer {max-height: 300px;
-                                      /* Раскрытие контейнера */
-                                     
-                                     }
-        
-        /* --- 7. ФУТЕР --- */footer {border-top: 1px solid rgba(255, 126, 95, 0.1);padding: 30px 0;text-align: center;color: rgba(255, 245, 240, 0.3);
-                                      font-size: 13px;}@media (max-width: 768px) {.hero h1 { font-size: 38px; }.nav-menu { display: none; }
-                                                                                
-                                                                                 }
-        
-        © 2026 FlashStudio Games. Все права защищены.document.querySelectorAll('.faq-question').forEach(question => {question.addEventListener('click', () => {const item = question.parentElement;
-                                                                                                                                                               // Закрываем другие открытые вопросы (опционально, для эффекта одиночного выбора)document.querySelectorAll('.faq-item').forEach(otherItem => {if (otherItem !== item) {otherItem.classList.remove('active');}});// Переключаем текущий вопросitem.classList.toggle('active');});});   
+
+        .faq-item.active .faq-icon {
+            transform: rotate(90deg);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+        }
+
+        /* --- 7. ФУТЕР --- */
+        footer {
+            border-top: 1px solid rgba(255, 126, 95, 0.1);
+            padding: 30px 0;
+            text-align: center;
+            color: rgba(255, 245, 240, 0.3);
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 38px; }
+            .nav-menu { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="#home" class="logo-block">
+                <img src="logo.png" alt="💣" class="logo-img">
+                <div class="logo-text">FLASH STUDIO</div>
+            </a>
+            
+            <div class="nav-menu">
+                <nav class="nav-links">
+                    <a href="#home">Главная</a>
+                    <a href="#games">Игры</a>
+                    <a href="#news">Новости</a>
+                </nav>
+                <div class="nav-socials">
+                    <a href="https://t.me" target="_blank" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
+                    <a href="#" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container" style="display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap;">
+            
+            <div class="hero-content" style="flex: 1; min-width: 300px;">
+                <h1>Тёплый закат, горячие <span>игры</span></h1>
+                <p>Привет! Мы — независимая инди-студия Flash Studio. Разрабатываем душевные и атмосферные игры под шум прибоя. Наша цель — подарить игрокам незабываемые эмоции и яркий визуальный стиль.</p>
+                <a href="#games" class="btn">Каталог игр</a>
+            </div>
+
+            <div class="hero-image-container" style="flex: 1; min-width: 300px; display: flex; justify-content: center;">
+                <img src="https://picsum.photos" alt="FlashStudio" style="max-width: 100%; height: auto; max-height: 380px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); border: 2px solid var(--sunset-orange);">
+            </div>
+
+        </div>
+    </section>
+
+    <section id="games" class="section">
+        <div class="container">
+            <h2 class="section-title">Каталог <span>Игр</span></h2>
+            
+            <div class="market-grid">
+                
+                <!-- ИГРА 1 -->
+                <div class="product-card">
+                    <div>
+                        <div class="product-meta">
+                            <span class="status">В разработке</span>
+                            <span class="version">pre-alpha 0.1.2</span>
+                        </div>
+                        <img src="https://picsum.photos" alt="Игра 1" class="product-img">
+                        <div class="product-title">Project Neon</div>
+                    </div>
+                    <div>
+                        <a href="#" class="price-btn">Бесплатно</a>
+                        <div class="release-date">Релиз: IV квартал 2026</div>
+                        <div class="store-icons" title="Доступные магазины">
+                            <i class="fa-brands fa-epic-games" title="Epic Games"></i>
+                            <span class="store-txt-ico" title="RuStore">RS</span>
+                            <span class="store-txt-ico" title="MY.GAMES">MG</span>
+                            <i class="fa-solid fa-mobile-screen-button" title="Huawei App Gallery"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ИГРА 2 -->
+                <div class="product-card">
+                    <div>
+                        <div class="product-meta">
+                            <span class="status" style="color: #28c76f; background: rgba(40,199,111,0.1);">Вышла</span>
+                            <span class="version">v1.0.4</span>
+                        </div>
+                        <img src="https://picsum.photos" alt="Игра 2" class="product-img">
+                        <div class="product-title">Sunset Drive</div>
+                    </div>
+                    <div>
+                        <a href="#" class="price-btn">299 руб.</a>
+                        <div class="release-date">Вышла: 15.06.2026</div>
+                        <div class="store-icons">
+                            <i class="fa-brands fa-epic-games"></i>
+                            <span class="store-txt-ico">RS</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="news" class="section" style="background: rgba(20, 13, 33, 0.2);">
+        <div class="container">
+            <h2 class="section-title">Последние <span>Новости</span></h2>
+            
+            <div class="news-grid">
+                
+                <div class="news-card">
+                    <img src="https://picsum.photos" alt="Обновление" class="news-img">
+                    <h3>Запустили новый дизайн сайта</h3>
+                    <p>Мы полностью обновили интерфейс под пляжный сеттинг! Теперь каталог игр выглядит как современная витрина маркетплейса, а в шапку интегрирована наша фирменная граната M84 без фона.</p>
+                </div>
+
+                <div class="news-card">
+                    <img src="https://picsum.photos" alt="Разработка" class="news-img">
+                    <h3>Начало pre-alpha тестов</h3>
+                    <p>Наш флагманский проект обновился до версии 0.1.2. Мы добавили базовую механику стрельбы и оптимизировали шейдеры воды. Следите за обновлениями в наших соцсетях!</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="section">
+        <div class="container">
+            <h2 class="section-title">Частые <span>Вопросы</span></h2>
+            
+            <div class="faq-container">
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fa-solid fa-chevron-right faq-icon"></i>
+                        <span>На каких платформах выходят ваши игры?</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Большинство наших проектов ориентированы на ПК (Epic Games Store) и мобильные платформы (RuStore, Huawei AppGallery). Точную информацию смотрите в карточке конкретной игры.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <i class="fa-solid fa-chevron-right faq-icon"></i>
+                        <span>Как попасть на закрытое бета-тестирование?</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Все анонсы тестирований мы публикуем в нашем Telegram-канале и Discord-сервере. Ссылки на них доступны в правом верхнем углу сайта. Присоединяйтесь!
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 FlashStudio Games. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
