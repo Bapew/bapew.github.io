@@ -192,12 +192,13 @@
             box-shadow: 0 8px 25px rgba(255, 126, 95, 0.7);
         }
 
-        /* --- 4. КАТАЛОГ ИГР (СТИЛЬ МАРКЕТПЛЕЙСА) --- */
+        /*МАРКЕТ И СТИЛь МАРКЕТА*/
         .market-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px;
-        }
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    align-items: start; /* Карточка игры зафиксирует свой размер и не будет вытягиваться */
+}
 
         .product-card {
             background: var(--card-glass);
@@ -478,7 +479,8 @@
                         </div>
                     </div>
                 </div>
-          </selection>   
+            </div>
+        </selection>   
     <section id="news" class="section" style="background: rgba(20, 13, 33, 0.2);">
         <div class="container">
             <h2 class="section-title">Последние <span>Новости</span></h2>
@@ -498,7 +500,8 @@
                 </div>
             </div>
         </div>
-  </selection>    
+  </selection>   
+        
     <section id="faq" class="section">
         <div class="container">
             <h2 class="section-title">Частые <span>Вопросы</span></h2>
@@ -528,7 +531,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
