@@ -44,7 +44,7 @@
     
             /* СНЯТИЕ БЛОКИРОВКИ СКРОЛЛА */
             overflow-x: hidden !important;
-            overflow-y: visible !important; /* Браузер обязан показывать полосу прокрутки */
+            overflow-y: auto !important; /* Браузер обязан показывать полосу прокрутки */
             height: auto !important;        /* Сайт будет растягиваться под любой контент вниз */
             min-height: 100vh;
         }
@@ -601,96 +601,5 @@
             
     </script>
 
-    <!-- БЛОК ТЕХНИЧЕСКИХ РАБОТ С ПРЯМЫМ ВЫВОДОМ ДАТЫ -->
-    <div id="maintenance-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #0e1017; z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; color: #fff; padding: 20px; text-align: center; overflow: hidden;">
-        
-        <!-- --- ЖЕЛТО-ГРАФИТОВЫЕ ПРЕДУПРЕДИТЕЛЬНЫЕ ЛЕНТЫ НА ФОНЕ --- -->
-        <div style="position: absolute; width: 150%; height: 60px; top: 40%; left: -25%; transform: rotate(15deg); background: repeating-linear-gradient(-45deg, #f1c40f, #f1c40f 25px, #2a2d37 25px, #2a2d37 50px); opacity: 0.25; filter: blur(1.5px); z-index: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; white-space: nowrap; pointer-events: none;">
-            <span style="color: #1a1c23; font-weight: 900; font-size: 22px; letter-spacing: 5px; text-transform: uppercase;">ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ</span>
-        </div>
-        
-        <div style="position: absolute; width: 150%; height: 60px; top: 45%; left: -25%; transform: rotate(-15deg); background: repeating-linear-gradient(-45deg, #f1c40f, #f1c40f 25px, #2a2d37 25px, #2a2d37 50px); opacity: 0.22; filter: blur(1.5px); z-index: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; white-space: nowrap; pointer-events: none;">
-            <span style="color: #1a1c23; font-weight: 900; font-size: 22px; letter-spacing: 5px; text-transform: uppercase;">ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ &nbsp;&nbsp;&nbsp;&nbsp; ТЕХНИЧЕСКИЕ РАБОТЫ</span>
-        </div>
-
-        <!-- --- КОНТЕНТ (ПОВЕРХ ЛЕНТ) --- -->
-        <div style="position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center;">
-            <!-- Анимированные часы -->
-            <div style="position: relative; width: 100px; height: 100px; border: 4px solid #ff7e5f; border-radius: 50%; margin-bottom: 30px; box-shadow: 0 0 20px rgba(255, 126, 95, 0.3); background: rgba(14,16,23,0.6); backdrop-filter: blur(5px);">
-                <div style="position: absolute; width: 4px; height: 30px; background: #fff; top: 20px; left: 44px; transform-origin: bottom center; border-radius: 4px; animation: clockRotate 12s linear infinite;"></div>
-                <div style="position: absolute; width: 3px; height: 40px; background: #feb47b; top: 10px; left: 44.5px; transform-origin: bottom center; border-radius: 4px; animation: clockRotate 1s linear infinite;"></div>
-                <div style="position: absolute; width: 8px; height: 8px; background: #ff7e5f; border-radius: 50%; top: 42px; left: 42px;"></div>
-            </div>
-
-            <h1 style="font-size: 36px; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 2px;">
-                <span style="background: linear-gradient(to right, #ff7e5f, #feb47b); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">FLASH STUDIO</span>
-            </h1>
-            
-            <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 20px; color: #ff7e5f;">Технические работы</h2>
-            
-            <p style="max-width: 500px; font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.7); margin-bottom: 40px;">
-                На данный момент на сайте проводятся технические работы и доступ к нему ограничен. Мы скоро вернемся с обновленным и полностью рабочим интерфейсом! Таймер ниже показывает время до конца технических работ:
-            </p>
-
-            <!-- Контейнер для таймера и даты -->
-            <div style="background: rgba(255,255,255,0.02); backdrop-filter: blur(8px); padding: 20px 35px; border-radius: 12px; border: 1px solid rgba(255,126,95,0.2); display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                <div id="maintenance-timer" style="font-size: 32px; font-weight: 800; font-family: monospace; letter-spacing: 1px;">
-                    00:00:00
-                </div>
-                <!-- Сюда будет выводиться ваша строка один в один -->
-                <div id="target-date-display" style="font-size: 14px; font-family: monospace; color: rgba(255,255,255,0.4); letter-spacing: 0.5px;">
-                    [....]
-                </div>
-            </div>
-        </div>
-
-        <style>
-            @keyframes clockRotate { 100% { transform: rotate(360deg); } }
-        </style>
-
-        <script>
-            // --- НАСТРОЙКА ДАТЫ ОКОНЧАНИЯ РАБОТ ---
-            // Пишите сюда дату в любом удобном формате. Она отобразится под таймером один в один!
-            const TARGET_DATE = "August 2, 2026 18:00:00 GMT+0300"; 
-
-            function initMaintenance() {
-                const countDownDate = new Date(TARGET_DATE).getTime();
-                
-                const timerElement = document.getElementById('maintenance-timer');
-                const dateDisplayElement = document.getElementById('target-date-display');
-
-                // ИСПРАВЛЕНО: Выводим вашу строку из переменной без изменений в квадратных скобках
-                dateDisplayElement.innerHTML = `[${TARGET_DATE}]`;
-
-                const interval = setInterval(() => {
-                    const now = new Date().getTime();
-                    const distance = countDownDate - now;
-
-                    if (distance < 0) {
-                        clearInterval(interval);
-                        timerElement.innerHTML = "В ближайшее время";
-                        timerElement.style.color = "#feb47b";
-                        timerElement.style.fontSize = "22px";
-                        return;
-                    }
-
-                    // ИСПРАВЛЕНО: Теперь часы не сбрасываются каждые сутки, а суммируются
-                    const hours = Math.floor(distance / (1000 * 60 * 60)); 
-                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-
-                    const displayHours = hours < 10 ? "0" + hours : hours;
-                    const displayMinutes = minutes < 10 ? "0" + minutes : minutes;
-                    const displaySeconds = seconds < 10 ? "0" + seconds : seconds;
-
-                    timerElement.innerHTML = `${displayHours}:${displayMinutes}:${displaySeconds}`;
-                }, 1000);
-            }
-
-            initMaintenance();
-        </script>
-    </div>
-         
 </body>
 </html>
