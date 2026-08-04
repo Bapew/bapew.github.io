@@ -283,21 +283,41 @@
         .store-icons {
             display: flex;
             justify-content: center;
-            gap: 14px;
+            align-items: center;
+            gap: 16px; /* равномерные отступы */
             flex-wrap: wrap;
-            font-size: 14px;
+            margin-top: 16px;
+            font-size: 0; /* убираем пробелы между inline-block элементами */
+        }
+
+        .store-icons > * {
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             color: rgba(255, 255, 255, 0.7);
+            transition: color 0.3s ease, transform 0.2s ease;
         }
 
-        .store-icons i, .store-icons span {
-            cursor: pointer;
-            transition: color 0.3s;
+        .store-icons i,
+        .store-icons svg {
+           cursor: pointer;
         }
 
-        .store-icons i:hover, .store-icons span:hover {
+        .store-icons i:hover,
+        .store-icons svg:hover {
             color: white;
+            transform: scale(1.1);
         }
 
+        /* Для SVG — фикс цвета при hover (чтобы fill тоже менялся) */
+        .store-icons svg:hover rect,
+        .store-icons svg:hover path {
+            fill: white !important;
+            stroke: white !important;
+        }
+        
         /* --- News & FAQ --- */
         .news-grid {
             display: grid;
@@ -350,7 +370,7 @@
         }
     </style>
 </head>
-<body>
+<body style="background: linear-gradient(135deg, #140d21, #2b1432, #5c243a, #9e433f); min-height: 100vh; overflow-x: hidden; overflow-y: auto;">
 
     <!-- Header -->
     <header>
@@ -400,10 +420,25 @@
                     <h3 class="product-title">Final Bell</h3>
                     <a href="#" class="price-btn">Бесплатно</a>
                     <div class="store-icons">
-                        <i class="fa-brands fa-epic-games"></i>
-                        <span>RuStore</span>
-                        <span>MY.GAMES</span>
-                        <i class="fa-solid fa-mobile-screen-button"></i>
+                    <!-- Epic Games -->
+                    <i class="fa-brands fa-epic-games" title="Epic Games Store" aria-label="Epic Games Store"></i>
+
+                    <!-- RuStore -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" title="RuStore" aria-label="RuStore" style="cursor: pointer;">
+                        <rect width="24" height="24" rx="4" fill="#FF7E5F"/>
+                        <path d="M6 12L12 8L18 12L12 16L6 12Z" fill="white"/>
+                    </svg>
+
+                    <!-- MY.GAMES -->
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" title="MY.GAMES" aria-label="MY.GAMES" style="cursor: pointer;">
+                        <rect x="2" y="2" width="20" height="20" rx="4" stroke="white" stroke-width="1.5"/>
+                        <path d="M7 10L12 15L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7 14L12 9L17 14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+
+                    <!-- Huawei AppGallery -->
+                    <i class="fa-solid fa-mobile-screen-button" title="Huawei AppGallery" aria-label="Huawei AppGallery"></i>
+                        </div>
                     </div>
                 </div>
             </div>
