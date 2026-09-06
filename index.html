@@ -17,10 +17,8 @@
             --sunset-orange: #ff7e5f;
             --sunset-pink: #feb47b;
             --amber: #ffc46b;
-            --card-glass: rgba(255, 255, 255, 0.07);
-            --border-color: rgba(255, 126, 95, 0.25);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --shadow: rgba(0, 0, 0, 0.3);
+            --glass-border: rgba(255, 158, 112, 0.38);
+            --border-color: rgba(255, 126, 95, 0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -43,11 +41,35 @@
             width: 100%; height: 100%;
             background: url('images/FlashIcon.jpg') center/cover no-repeat;
             filter: blur(8px);
-            z-index: -1;
+            z-index: -2;
             opacity: 0.9;
         }
 
+        /* --- Мягкие осенние свечения, чтобы фон не был пустым --- */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(40% 30% at 15% 18%, rgba(255,126,95,0.12), transparent 70%),
+                radial-gradient(35% 28% at 85% 30%, rgba(254,180,123,0.10), transparent 70%),
+                radial-gradient(45% 35% at 50% 88%, rgba(255,90,60,0.08), transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* ============================================
+           ОБЩИЙ СТИЛЬ МАТОВОГО СТЕКЛА (видимая обводка)
+           ============================================ */
+        .product-card, .news-card, .faq-item {
+            background: linear-gradient(150deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(18px) saturate(140%);
+            -webkit-backdrop-filter: blur(18px) saturate(140%);
+            box-shadow: 0 10px 34px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+        }
 
         /* ============================================
            ПАДАЮЩИЕ ЛИСТЬЯ (вылетают из-под навигации)
@@ -55,11 +77,11 @@
         #leaves {
             position: fixed;
             left: 0; right: 0;
-            top: 72px; /* JS уточнит по высоте шапки */
+            top: 72px;
             height: 0;
             overflow: visible;
             pointer-events: none;
-            z-index: 950; /* ниже шапки (1000), чтобы листья выезжали из-под неё */
+            z-index: 950;
         }
 
         .leaf {
@@ -89,10 +111,11 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%;
-            background: rgba(22, 12, 26, 0.55);
+            background: rgba(22, 12, 26, 0.6);
             backdrop-filter: blur(16px) saturate(140%);
             -webkit-backdrop-filter: blur(16px) saturate(140%);
             border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
             z-index: 1000;
             padding: 16px 0;
         }
@@ -101,34 +124,21 @@
         .left-section { display: flex; align-items: center; gap: 12px; }
 
         .social-icons { display: flex; gap: 10px; }
-        .social-icons a {
-            color: var(--text-light);
-            font-size: 1.4rem;
-            transition: all 0.3s ease;
-        }
+        .social-icons a { color: var(--text-light); font-size: 1.4rem; transition: all 0.3s ease; }
         .social-icons a:hover { color: var(--sunset-orange); transform: scale(1.1); }
 
         .logo-wrapper { display: flex; align-items: center; gap: 10px; }
         .logo-img { height: 40px; width: auto; }
-        .logo-text {
-            font-size: 24px; font-weight: 800;
-            color: var(--text-light);
-            transition: transform 0.3s ease;
-        }
+        .logo-text { font-size: 24px; font-weight: 800; color: var(--text-light); transition: transform 0.3s ease; }
         .logo-text:hover { transform: scale(1.06); }
 
         .nav-menu { display: flex; gap: 28px; }
-        .nav-menu a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 600; font-size: 16px;
-            transition: color 0.3s;
-        }
+        .nav-menu a { color: var(--text-light); text-decoration: none; font-weight: 600; font-size: 16px; transition: color 0.3s; }
         .nav-menu a:hover { color: var(--sunset-orange); }
 
         /* --- Sections --- */
         .section {
-            padding: 100px 0;
+            padding: 80px 0;
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -146,11 +156,27 @@
 
         /* --- Hero --- */
         .hero {
-            min-height: 90vh;
+            min-height: 76vh;
             display: flex; align-items: center; justify-content: center;
             text-align: center;
             padding-top: 80px;
+            position: relative;
         }
+
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 18px;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+            font-size: 13px; font-weight: 600; letter-spacing: .3px;
+            color: var(--sunset-pink);
+            margin-bottom: 24px;
+        }
+
         .hero h1 {
             font-size: 3.8rem;
             margin-bottom: 20px;
@@ -158,7 +184,6 @@
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         .hero p {
             font-size: 1.5rem;
@@ -166,6 +191,19 @@
             margin: 0 auto 30px;
             color: rgba(255, 245, 240, 0.9);
             text-shadow: 0 1px 5px rgba(0,0,0,0.2);
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 10px; left: 50%;
+            color: rgba(255,245,240,.55);
+            font-size: 20px;
+            animation: bounce 2s infinite;
+            text-decoration: none;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, 0); }
+            50%      { transform: translate(-50%, 8px); }
         }
 
         .btn {
@@ -181,7 +219,7 @@
         .btn:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(255, 126, 95, 0.7); }
 
         /* ============================================
-           КАРТОЧКИ ИГР (стекло + раскрытие)
+           КАРТОЧКИ ИГР
            ============================================ */
         .market-grid {
             display: flex;
@@ -192,12 +230,8 @@
         }
 
         .product-card {
-            background: var(--card-glass);
-            backdrop-filter: blur(16px) saturate(130%);
-            -webkit-backdrop-filter: blur(16px) saturate(130%);
-            border: 1px solid var(--glass-border);
-            border-radius: 14px;
-            padding: 22px 16px;
+            border-radius: 16px;
+            padding: 24px 18px;
             width: 100%;
             max-width: 280px;
             text-align: center;
@@ -206,17 +240,15 @@
         }
         .product-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(255, 126, 95, 0.2);
+            box-shadow: 0 12px 36px rgba(255, 126, 95, 0.25);
             border-color: var(--sunset-orange);
         }
-        .product-card.expanded {
-            max-width: 720px;
-            transform: none;
-        }
+        .product-card.expanded { max-width: 760px; transform: none; }
 
         .product-status {
             display: inline-block;
             background: rgba(254, 180, 123, 0.15);
+            border: 1px solid rgba(254, 180, 123, 0.4);
             color: var(--sunset-pink);
             padding: 4px 12px;
             border-radius: 20px;
@@ -230,30 +262,33 @@
             margin: 0 auto 20px;
             border-radius: 10px;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(0,0,0,0.15);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.35);
         }
         .product-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
         .product-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 20px; }
 
-        /* Кнопка "Подробнее / Свернуть" */
+        /* Кнопка "Подробнее / Свернуть" — вторичная, стеклянная */
         .price-btn {
             display: block;
             width: 100%;
             padding: 12px;
-            background: var(--sunset-orange);
-            color: white;
-            border: none;
-            border-radius: 8px;
+            background: rgba(255, 126, 95, 0.12);
+            border: 1px solid rgba(255, 126, 95, 0.6);
+            color: #ffcdb8;
+            border-radius: 10px;
             font-weight: 700;
             font-size: 15px;
             font-family: inherit;
             cursor: pointer;
-            margin-bottom: 18px;
-            transition: background 0.3s, transform 0.2s;
+            margin-bottom: 16px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: background 0.3s, transform 0.2s, border-color 0.3s;
         }
-        .price-btn:hover { background: #ff6b4d; transform: translateY(-1px); }
+        .price-btn:hover { background: rgba(255, 126, 95, 0.28); border-color: var(--sunset-orange); transform: translateY(-1px); }
 
         /* --- Раскрывающаяся часть карточки --- */
         .card-details {
@@ -271,10 +306,7 @@
         .product-card.expanded .card-details { grid-template-rows: 1fr; }
         .product-card.expanded .details-inner { opacity: 1; }
 
-        .statuses {
-            display: flex; flex-wrap: wrap; gap: 8px;
-            margin-bottom: 14px;
-        }
+        .statuses { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
         .status-badge {
             display: inline-flex; align-items: center; gap: 7px;
             padding: 5px 12px;
@@ -285,14 +317,12 @@
             background: rgba(255,255,255,.06);
             backdrop-filter: blur(6px);
         }
-        /* Статус разработки: dev-dev / dev-alpha / dev-release */
-        .dev-dev     { color: var(--amber);  border-color: rgba(255,196,107,.45); }
-        .dev-alpha   { color: #7cc4ff;       border-color: rgba(124,196,255,.45); }
-        .dev-release { color: #7dffa8;       border-color: rgba(125,255,168,.45); }
-        /* Статус активности: act-online / act-offline / act-maint */
-        .act-online  { color: #7dffa8;       border-color: rgba(125,255,168,.45); }
-        .act-offline { color: #ff8080;       border-color: rgba(255,128,128,.45); }
-        .act-maint   { color: #ffd97a;       border-color: rgba(255,217,122,.45); }
+        .dev-dev     { color: var(--amber);  border-color: rgba(255,196,107,.5); }
+        .dev-alpha   { color: #7cc4ff;       border-color: rgba(124,196,255,.5); }
+        .dev-release { color: #7dffa8;       border-color: rgba(125,255,168,.5); }
+        .act-online  { color: #7dffa8;       border-color: rgba(125,255,168,.5); }
+        .act-offline { color: #ff8080;       border-color: rgba(255,128,128,.5); }
+        .act-maint   { color: #ffd97a;       border-color: rgba(255,217,122,.5); }
         .dot {
             width: 8px; height: 8px; border-radius: 50%;
             background: currentColor;
@@ -304,7 +334,7 @@
         .game-desc {
             font-size: 14px;
             line-height: 1.6;
-            color: rgba(255,245,240,.85);
+            color: rgba(255,245,240,.88);
             margin-bottom: 16px;
         }
 
@@ -320,7 +350,7 @@
         }
         .platform-chip i { color: var(--sunset-pink); }
 
-        .price-line { font-size: 14px; margin-bottom: 4px; color: rgba(255,245,240,.8); }
+        .price-line { font-size: 14px; color: rgba(255,245,240,.8); }
         .price-free { color: #7dffa8; font-weight: 800; font-size: 16px; }
 
         /* Большая кнопка скачивания */
@@ -330,7 +360,7 @@
             display: flex; align-items: center; justify-content: center; gap: 10px;
             width: 100%;
             padding: 16px 20px;
-            margin-top: 12px;
+            margin: 12px 0 16px;   /* <-- отступы, чтобы кнопки не слипались */
             border-radius: 12px;
             background: linear-gradient(45deg, var(--sunset-orange), #ff416c);
             color: #fff; text-decoration: none;
@@ -349,34 +379,38 @@
         }
         @keyframes shine { 0% { left: -60%; } 60%, 100% { left: 120%; } }
 
+        /* --- Иконки магазинов в стеклянных плитках --- */
         .store-icons {
             display: flex; justify-content: center; align-items: center;
-            gap: 16px; flex-wrap: wrap;
-            margin-top: 16px; font-size: 0;
+            gap: 12px; flex-wrap: wrap;
+            margin-top: 4px; font-size: 0;
         }
         .store-icons > * {
-            width: 24px; height: 24px;
+            width: 38px; height: 38px;
             display: inline-flex; align-items: center; justify-content: center;
-            color: rgba(255, 255, 255, 0.7);
-            transition: color 0.3s ease, transform 0.2s ease;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid var(--glass-border);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 16px;
+            transition: transform 0.2s ease, border-color 0.3s, background 0.3s;
         }
-        .store-icons i, .store-icons svg { cursor: pointer; }
-        .store-icons i:hover, .store-icons svg:hover { color: white; transform: scale(1.1); }
-        .store-icons svg:hover rect, .store-icons svg:hover path { fill: white !important; stroke: white !important; }
+        .store-icons svg { width: 20px; height: 20px; cursor: pointer; }
+        .store-icons i { cursor: pointer; }
+        .store-icons > *:hover {
+            transform: translateY(-2px) scale(1.06);
+            border-color: var(--sunset-orange);
+            background: rgba(255,126,95,0.15);
+            color: white;
+        }
 
-        /* --- News & FAQ (стекло) --- */
+        /* --- News & FAQ --- */
         .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
 
-        .news-card, .faq-item {
-            background: var(--card-glass);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 20px;
-        }
+        .news-card, .faq-item { border-radius: 14px; padding: 22px; }
         .news-card h3 { color: var(--sunset-pink); margin-bottom: 8px; }
-        .news-card p { font-size: 14px; line-height: 1.6; color: rgba(255,245,240,.85); }
+        .news-card p { font-size: 14px; line-height: 1.6; color: rgba(255,245,240,.88); }
 
         .faq-item { margin-bottom: 14px; }
         .faq-question {
@@ -389,19 +423,19 @@
             padding-top: 12px;
             max-height: 0; overflow: hidden;
             transition: max-height 0.4s ease;
-            font-size: 14px; color: rgba(255,245,240,.85);
+            font-size: 14px; color: rgba(255,245,240,.88);
         }
         .faq-item.active .faq-answer { max-height: 200px; }
 
-        /* --- Footer (стекло) --- */
+        /* --- Footer: прозрачный, без лишней полосы --- */
         footer {
-            padding: 35px 0;
+            padding: 30px 0;
             text-align: center;
-            background: rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-top: 1px solid var(--border-color);
-            margin-top: 50px;
+            background: transparent;
+            border-top: 1px solid rgba(255, 158, 112, 0.22);
+            margin-top: 40px;
+            font-size: 14px;
+            color: rgba(255,245,240,.75);
         }
 
         /* --- Mobile --- */
@@ -447,10 +481,12 @@
         <div class="container">
             <div class="hero">
                 <div>
+                    <div class="hero-badge">🍂 Осеннее обновление сайта</div>
                     <h1>Добро пожаловать в FlashStudio</h1>
                     <p>Создаём инди-игры с душой. Наша миссия — вдохновлять, развлекать и удивлять.</p>
                     <a href="#games" class="btn">Наши проекты</a>
                 </div>
+                <a href="#games" class="scroll-hint" aria-label="Листать вниз"><i class="fas fa-chevron-down"></i></a>
             </div>
         </div>
     </section>
@@ -472,9 +508,9 @@
                     <div class="card-details">
                         <div class="details-inner">
                             <div class="statuses">
-                                <!-- Статус разработки: dev-dev (в разработке) / dev-alpha (альфа) / dev-release (релиз) -->
+                                <!-- Статус разработки: dev-dev / dev-alpha / dev-release -->
                                 <span class="status-badge dev-dev"><i class="fas fa-hammer"></i> В разработке</span>
-                                <!-- Статус активности: act-online / act-offline / act-maint (тех. работы) -->
+                                <!-- Статус активности: act-online / act-offline / act-maint -->
                                 <span class="status-badge act-online"><span class="dot"></span> Онлайн</span>
                             </div>
 
@@ -494,7 +530,7 @@
 
                             <div class="price-line">Цена: <span class="price-free">Бесплатно</span></div>
 
-                            <!-- Замените href="#" на прямую ссылку на файл игры на вашем сайте -->
+                            <!-- Замените href="#" на прямую ссылку на файл игры -->
                             <a href="#" class="download-btn"><i class="fas fa-download"></i> СКАЧАТЬ С САЙТА</a>
                         </div>
                     </div>
@@ -502,23 +538,19 @@
                     <button class="price-btn" id="toggleCard" aria-expanded="false">Подробнее</button>
 
                     <div class="store-icons">
-                        <!-- Epic Games -->
                         <i class="fa-brands fa-epic-games" title="Epic Games Store" aria-label="Epic Games Store"></i>
 
-                        <!-- RuStore -->
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" title="RuStore" aria-label="RuStore" style="cursor: pointer;">
                             <rect width="24" height="24" rx="4" fill="#FF7E5F"/>
                             <path d="M6 12L12 8L18 12L12 16L6 12Z" fill="white"/>
                         </svg>
 
-                        <!-- MY.GAMES -->
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" title="MY.GAMES" aria-label="MY.GAMES" style="cursor: pointer;">
                             <rect x="2" y="2" width="20" height="20" rx="4" stroke="white" stroke-width="1.5"/>
                             <path d="M7 10L12 15L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M7 14L12 9L17 14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
 
-                        <!-- Huawei AppGallery -->
                         <i class="fa-solid fa-mobile-screen-button" title="Huawei AppGallery" aria-label="Huawei AppGallery"></i>
                     </div>
                 </div>
@@ -579,13 +611,10 @@
     </footer>
 
     <script>
-        /* ============================================
-           1. МАЛЕНЬКИЕ ЛИСТЬЯ, ПАДАЮЩИЕ ИЗ НАВИГАЦИИ
-           ============================================ */
+        /* ============ ЛИСТЬЯ ИЗ НАВИГАЦИИ ============ */
         const leavesBox = document.getElementById('leaves');
         const headerEl  = document.getElementById('header');
 
-        // Листья стартуют ровно у нижней кромки шапки
         function placeLeavesBox() {
             leavesBox.style.top = headerEl.offsetHeight + 'px';
         }
@@ -600,23 +629,20 @@
             leaf.textContent = icons[Math.floor(Math.random() * icons.length)];
 
             leaf.style.left = Math.random() * 100 + '%';
-            leaf.style.fontSize = (9 + Math.random() * 7) + 'px';          // маленькие: 9–16px
-            leaf.style.animationDuration = (4 + Math.random() * 4) + 's'; // 4–8 сек
-            leaf.style.setProperty('--fall', (140 + Math.random() * 160) + 'px'); // длина падения 140–300px
-            leaf.style.setProperty('--sway', (Math.random() * 60 - 30) + 'px');   // покачивание
+            leaf.style.fontSize = (9 + Math.random() * 7) + 'px';
+            leaf.style.animationDuration = (4 + Math.random() * 4) + 's';
+            leaf.style.setProperty('--fall', (140 + Math.random() * 160) + 'px');
+            leaf.style.setProperty('--sway', (Math.random() * 60 - 30) + 'px');
             leaf.style.setProperty('--rot',  Math.floor(Math.random() * 360) + 'deg');
 
             leavesBox.appendChild(leaf);
             leaf.addEventListener('animationend', () => leaf.remove());
         }
 
-        // Небольшой стартовый "залп" + постоянное появление
         for (let i = 0; i < 5; i++) setTimeout(spawnLeaf, i * 250);
-        setInterval(spawnLeaf, 700); // реже/чаще — меняйте число
+        setInterval(spawnLeaf, 700);
 
-        /* ============================================
-           2. РАСКРЫТИЕ КАРТОЧКИ ИГРЫ
-           ============================================ */
+        /* ============ РАСКРЫТИЕ КАРТОЧКИ ============ */
         const gameCard  = document.getElementById('gameCard');
         const toggleBtn = document.getElementById('toggleCard');
 
@@ -635,15 +661,11 @@
             setCardState(!gameCard.classList.contains('expanded'));
         });
 
-        // Свернуть по Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && gameCard.classList.contains('expanded')) setCardState(false);
         });
 
-        /* ============================================
-           3. ПРЕЖНИЕ СКРИПТЫ
-           ============================================ */
-        // Анимация появления секций при прокрутке
+        /* ============ ПРЕЖНИЕ СКРИПТЫ ============ */
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach(entry => {
@@ -654,7 +676,6 @@
         );
         document.querySelectorAll('.section').forEach(sec => observer.observe(sec));
 
-        // Плавная прокрутка по якорям
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -665,7 +686,6 @@
             });
         });
 
-        // FAQ аккордеон
         document.querySelectorAll('.faq-question').forEach(q => {
             q.addEventListener('click', () => {
                 q.closest('.faq-item').classList.toggle('active');
