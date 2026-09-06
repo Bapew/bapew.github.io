@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -396,7 +396,7 @@
             font-size: 16px;
             transition: transform 0.2s ease, border-color 0.3s, background 0.3s;
         }
-        .store-icons svg { width: 20px; height: 20px; cursor: pointer; }
+        .store-icons a { text-decoration: none; }
         .store-icons i { cursor: pointer; }
         .store-icons > *:hover {
             transform: translateY(-2px) scale(1.06);
@@ -511,7 +511,7 @@
                                 <!-- Статус разработки: dev-dev / dev-alpha / dev-release -->
                                 <span class="status-badge dev-dev"><i class="fas fa-hammer"></i> В разработке</span>
                                 <!-- Статус активности: act-online / act-offline / act-maint -->
-                                <span class="status-badge act-online"><span class="dot"></span> Онлайн</span>
+                                <span class="status-badge act-onffine"><span class="dot"></span> Оффлайн</span>
                             </div>
 
                             <p class="game-desc">
@@ -522,11 +522,15 @@
                             </p>
 
                             <div class="platforms">
-                                <span class="platform-chip"><i class="fa-brands fa-epic-games"></i> Epic Games Store</span>
-                                <span class="platform-chip"><i class="fa-brands fa-windows"></i> Windows</span>
-                                <span class="platform-chip"><i class="fa-solid fa-mobile-screen-button"></i> RuStore</span>
-                                <span class="platform-chip"><i class="fa-brands fa-android"></i> AppGallery</span>
-                            </div>
+                                <span class="platform-chip"><i class="fas fa-download"></i> Скачать с сайта</span>
+                                <span class="platform-chip">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="24" height="24" rx="4" fill="#FF7E5F"/>
+                                <path d="M6 12L12 8L18 12L12 16L6 12Z" fill="white"/>
+                                </svg>
+                                RuStore
+                            </span>
+                        </div>
 
                             <div class="price-line">Цена: <span class="price-free">Бесплатно</span></div>
 
@@ -538,12 +542,19 @@
                     <button class="price-btn" id="toggleCard" aria-expanded="false">Подробнее</button>
 
                     <div class="store-icons">
-                        <i class="fa-brands fa-epic-games" title="Epic Games Store" aria-label="Epic Games Store"></i>
+                        <!-- Скачивание с сайта (замените href на ссылку к файлу игры) -->
+                        <a href="#" title="Скачать с сайта" aria-label="Скачать с сайта">
+                        <i class="fas fa-download"></i>
+                        </a>
 
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" title="RuStore" aria-label="RuStore" style="cursor: pointer;">
-                            <rect width="24" height="24" rx="4" fill="#FF7E5F"/>
-                            <path d="M6 12L12 8L18 12L12 16L6 12Z" fill="white"/>
-                        </svg>
+                        <!-- RuStore (замените href на страницу игры в RuStore) -->
+                        <a href="#" title="RuStore" aria-label="RuStore">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="24" height="24" rx="4" fill="#FF7E5F"/>
+                <path d="M6 12L12 8L18 12L12 16L6 12Z" fill="white"/>
+            </svg>
+        </a>
+    </div>
 
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" title="MY.GAMES" aria-label="MY.GAMES" style="cursor: pointer;">
                             <rect x="2" y="2" width="20" height="20" rx="4" stroke="white" stroke-width="1.5"/>
