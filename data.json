@@ -8,7 +8,7 @@
     "iconPosition": "left"
   },
   "game": {
-    "devStatus": "dev",
+    "devStatus": "release",
     "activeStatus": "offline"
   },
   "news": [
