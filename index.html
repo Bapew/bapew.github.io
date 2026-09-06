@@ -1,17 +1,12 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlashStudio | Indie Game Dev</title>
-
-    <!-- Шрифты -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* --- Глобальные переменные --- */
         :root {
             --text-light: #fff5f0;
             --sunset-orange: #ff7e5f;
@@ -20,9 +15,7 @@
             --glass-border: rgba(255, 158, 112, 0.38);
             --border-color: rgba(255, 126, 95, 0.3);
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Montserrat', sans-serif;
             color: var(--text-light);
@@ -32,8 +25,6 @@
             overflow-y: auto;
             position: relative;
         }
-
-        /* --- Размытый фон --- */
         body::before {
             content: '';
             position: fixed;
@@ -44,8 +35,6 @@
             z-index: -2;
             opacity: 0.9;
         }
-
-        /* --- Мягкие осенние свечения, чтобы фон не был пустым --- */
         body::after {
             content: '';
             position: fixed;
@@ -57,12 +46,7 @@
             pointer-events: none;
             z-index: -1;
         }
-
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-        /* ============================================
-           ОБЩИЙ СТИЛЬ МАТОВОГО СТЕКЛА (видимая обводка)
-           ============================================ */
         .product-card, .news-card, .faq-item {
             background: linear-gradient(150deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
             border: 1px solid var(--glass-border);
@@ -70,10 +54,6 @@
             -webkit-backdrop-filter: blur(18px) saturate(140%);
             box-shadow: 0 10px 34px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
         }
-
-        /* ============================================
-           ПАДАЮЩИЕ ЛИСТЬЯ (вылетают из-под навигации)
-           ============================================ */
         #leaves {
             position: fixed;
             left: 0; right: 0;
@@ -83,7 +63,6 @@
             pointer-events: none;
             z-index: 950;
         }
-
         .leaf {
             position: absolute;
             top: -16px;
@@ -93,7 +72,6 @@
             will-change: transform, opacity;
             user-select: none;
         }
-
         @keyframes leafFall {
             0%   { transform: translate3d(0, -12px, 0) rotate(0deg); opacity: 0; }
             12%  { opacity: .95; }
@@ -101,12 +79,7 @@
             70%  { transform: translate3d(calc(var(--sway) * -.5), calc(var(--fall) * .75), 0) rotate(var(--rot)); opacity: .9; }
             100% { transform: translate3d(var(--sway), var(--fall), 0) rotate(calc(var(--rot) * 1.4)); opacity: 0; }
         }
-
-        @media (prefers-reduced-motion: reduce) {
-            .leaf { display: none; }
-        }
-
-        /* --- Header (матовое стекло) --- */
+        @media (prefers-reduced-motion: reduce) { .leaf { display: none; } }
         header {
             position: fixed;
             top: 0; left: 0;
@@ -119,24 +92,18 @@
             z-index: 1000;
             padding: 16px 0;
         }
-
         .nav-container { display: flex; justify-content: space-between; align-items: center; }
         .left-section { display: flex; align-items: center; gap: 12px; }
-
         .social-icons { display: flex; gap: 10px; }
         .social-icons a { color: var(--text-light); font-size: 1.4rem; transition: all 0.3s ease; }
         .social-icons a:hover { color: var(--sunset-orange); transform: scale(1.1); }
-
         .logo-wrapper { display: flex; align-items: center; gap: 10px; }
         .logo-img { height: 40px; width: auto; }
         .logo-text { font-size: 24px; font-weight: 800; color: var(--text-light); transition: transform 0.3s ease; }
         .logo-text:hover { transform: scale(1.06); }
-
         .nav-menu { display: flex; gap: 28px; }
         .nav-menu a { color: var(--text-light); text-decoration: none; font-weight: 600; font-size: 16px; transition: color 0.3s; }
         .nav-menu a:hover { color: var(--sunset-orange); }
-
-        /* --- Sections --- */
         .section {
             padding: 80px 0;
             opacity: 0;
@@ -144,7 +111,6 @@
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
         .section.visible { opacity: 1; transform: translateY(0); }
-
         .section-title {
             text-align: center;
             font-size: 2.8rem;
@@ -153,8 +119,6 @@
             letter-spacing: 1px;
         }
         .section-title span { color: var(--sunset-orange); }
-
-        /* --- Hero --- */
         .hero {
             min-height: 76vh;
             display: flex; align-items: center; justify-content: center;
@@ -162,7 +126,6 @@
             padding-top: 80px;
             position: relative;
         }
-
         .hero-badge {
             display: inline-flex; align-items: center; gap: 8px;
             padding: 8px 18px;
@@ -176,7 +139,6 @@
             color: var(--sunset-pink);
             margin-bottom: 24px;
         }
-
         .hero h1 {
             font-size: 3.8rem;
             margin-bottom: 20px;
@@ -192,7 +154,6 @@
             color: rgba(255, 245, 240, 0.9);
             text-shadow: 0 1px 5px rgba(0,0,0,0.2);
         }
-
         .scroll-hint {
             position: absolute;
             bottom: 10px; left: 50%;
@@ -205,7 +166,6 @@
             0%, 100% { transform: translate(-50%, 0); }
             50%      { transform: translate(-50%, 8px); }
         }
-
         .btn {
             display: inline-block;
             padding: 14px 36px;
@@ -217,10 +177,6 @@
             box-shadow: 0 6px 20px rgba(255, 126, 95, 0.4);
         }
         .btn:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(255, 126, 95, 0.7); }
-
-        /* ============================================
-           КАРТОЧКИ ИГР
-           ============================================ */
         .market-grid {
             display: flex;
             flex-wrap: wrap;
@@ -228,7 +184,6 @@
             justify-content: center;
             align-items: flex-start;
         }
-
         .product-card {
             border-radius: 16px;
             padding: 24px 18px;
@@ -244,7 +199,6 @@
             border-color: var(--sunset-orange);
         }
         .product-card.expanded { max-width: 760px; transform: none; }
-
         .product-status {
             display: inline-block;
             background: rgba(254, 180, 123, 0.15);
@@ -256,7 +210,6 @@
             text-transform: uppercase;
             margin-bottom: 16px;
         }
-
         .product-img-wrapper {
             width: 180px; height: 180px;
             margin: 0 auto 20px;
@@ -267,10 +220,7 @@
             box-shadow: 0 6px 18px rgba(0,0,0,0.35);
         }
         .product-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
         .product-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 20px; }
-
-        /* Кнопка "Подробнее / Свернуть" — вторичная, стеклянная */
         .price-btn {
             display: block;
             width: 100%;
@@ -289,8 +239,6 @@
             transition: background 0.3s, transform 0.2s, border-color 0.3s;
         }
         .price-btn:hover { background: rgba(255, 126, 95, 0.28); border-color: var(--sunset-orange); transform: translateY(-1px); }
-
-        /* --- Раскрывающаяся часть карточки --- */
         .card-details {
             display: grid;
             grid-template-rows: 0fr;
@@ -305,7 +253,6 @@
         }
         .product-card.expanded .card-details { grid-template-rows: 1fr; }
         .product-card.expanded .details-inner { opacity: 1; }
-
         .statuses { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
         .status-badge {
             display: inline-flex; align-items: center; gap: 7px;
@@ -330,14 +277,12 @@
             animation: pulse 1.6s infinite;
         }
         @keyframes pulse { 50% { opacity: .35; } }
-
         .game-desc {
             font-size: 14px;
             line-height: 1.6;
             color: rgba(255,245,240,.88);
             margin-bottom: 16px;
         }
-
         .platforms { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
         .platform-chip {
             display: inline-flex; align-items: center; gap: 8px;
@@ -349,18 +294,15 @@
             font-size: 12px; font-weight: 600;
         }
         .platform-chip i { color: var(--sunset-pink); }
-
         .price-line { font-size: 14px; color: rgba(255,245,240,.8); }
         .price-free { color: #7dffa8; font-weight: 800; font-size: 16px; }
-
-        /* Большая кнопка скачивания */
         .download-btn {
             position: relative;
             overflow: hidden;
             display: flex; align-items: center; justify-content: center; gap: 10px;
             width: 100%;
             padding: 16px 20px;
-            margin: 12px 0 16px;   /* <-- отступы, чтобы кнопки не слипались */
+            margin: 12px 0 16px;
             border-radius: 12px;
             background: linear-gradient(45deg, var(--sunset-orange), #ff416c);
             color: #fff; text-decoration: none;
@@ -378,8 +320,6 @@
             animation: shine 2.8s infinite;
         }
         @keyframes shine { 0% { left: -60%; } 60%, 100% { left: 120%; } }
-
-        /* --- Иконки магазинов в стеклянных плитках --- */
         .store-icons {
             display: flex; justify-content: center; align-items: center;
             gap: 12px; flex-wrap: wrap;
@@ -396,7 +336,7 @@
             font-size: 16px;
             transition: transform 0.2s ease, border-color 0.3s, background 0.3s;
         }
-        .store-icons a { text-decoration: none; }
+        .store-icons svg { width: 20px; height: 20px; cursor: pointer; }
         .store-icons i { cursor: pointer; }
         .store-icons > *:hover {
             transform: translateY(-2px) scale(1.06);
@@ -404,14 +344,11 @@
             background: rgba(255,126,95,0.15);
             color: white;
         }
-
-        /* --- News & FAQ --- */
+        .store-icons a { text-decoration: none; }
         .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-
         .news-card, .faq-item { border-radius: 14px; padding: 22px; }
         .news-card h3 { color: var(--sunset-pink); margin-bottom: 8px; }
         .news-card p { font-size: 14px; line-height: 1.6; color: rgba(255,245,240,.88); }
-
         .faq-item { margin-bottom: 14px; }
         .faq-question {
             display: flex; justify-content: space-between; align-items: center;
@@ -426,8 +363,6 @@
             font-size: 14px; color: rgba(255,245,240,.88);
         }
         .faq-item.active .faq-answer { max-height: 200px; }
-
-        /* --- Footer: прозрачный, без лишней полосы --- */
         footer {
             padding: 30px 0;
             text-align: center;
@@ -437,8 +372,6 @@
             font-size: 14px;
             color: rgba(255,245,240,.75);
         }
-
-        /* --- Mobile --- */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.6rem; }
             .hero p { font-size: 1.2rem; }
@@ -447,14 +380,52 @@
             .section-title { font-size: 2.2rem; }
             .product-card.expanded { max-width: 100%; }
         }
+
+        /* --- Страница тех. работ --- */
+        .maintenance-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #150a10 0%, #33141f 40%, #5e241a 75%, #8f4b26 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            text-align: center;
+            padding: 20px;
+        }
+        .maintenance-overlay h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--sunset-orange), var(--sunset-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .maintenance-overlay p {
+            font-size: 1.2rem;
+            color: rgba(255,245,240,.85);
+            max-width: 500px;
+        }
+        .maintenance-overlay .gear {
+            font-size: 5rem;
+            margin-bottom: 30px;
+            animation: spin 4s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body style="background: linear-gradient(135deg, #150a10 0%, #33141f 40%, #5e241a 75%, #8f4b26 100%); min-height: 100vh; overflow-x: hidden; overflow-y: auto;">
 
-    <!-- Контейнер для листьев, падающих из навигации -->
+    <!-- Оверлей тех. работ (скрыт по умолчанию) -->
+    <div id="maintenanceOverlay" class="maintenance-overlay" style="display: none;">
+        <div class="gear">⚙️</div>
+        <h1>Технические работы</h1>
+        <p>Сайт временно недоступен. Мы работаем над улучшениями и скоро вернёмся!</p>
+    </div>
+
     <div id="leaves" aria-hidden="true"></div>
 
-    <!-- Header -->
     <header id="header">
         <div class="container nav-container">
             <div class="left-section">
@@ -476,7 +447,6 @@
         </div>
     </header>
 
-    <!-- Hero -->
     <section id="home" class="section">
         <div class="container">
             <div class="hero">
@@ -491,27 +461,22 @@
         </div>
     </section>
 
-    <!-- Games -->
     <section id="games" class="section">
         <div class="container">
             <h2 class="section-title">Наши <span>Игры</span></h2>
             <div class="market-grid">
-
                 <div class="product-card" id="gameCard">
-                    <div class="product-status">В разработке</div>
+                    <div class="product-status" id="gameStatusBadge">В разработке</div>
                     <div class="product-img-wrapper">
                         <img src="images/Game1.jpg" alt="Final Bell" class="product-img">
                     </div>
                     <h3 class="product-title">Final Bell</h3>
 
-                    <!-- Раскрывающееся описание -->
                     <div class="card-details">
                         <div class="details-inner">
                             <div class="statuses">
-                                <!-- Статус разработки: dev-dev / dev-alpha / dev-release -->
-                                <span class="status-badge dev-dev"><i class="fas fa-hammer"></i> В разработке</span>
-                                <!-- Статус активности: act-online / act-offline / act-maint -->
-                                <span class="status-badge act-onffine"><span class="dot"></span> Оффлайн</span>
+                                <span class="status-badge dev-dev" id="devStatusBadge"><i class="fas fa-hammer"></i> В разработке</span>
+                                <span class="status-badge act-online" id="activeStatusBadge"><span class="dot"></span> Онлайн</span>
                             </div>
 
                             <p class="game-desc">
@@ -522,13 +487,12 @@
                             </p>
 
                             <div class="platforms">
-                            <span class="platform-chip"><i class="fas fa-download"></i> Скачать с сайта</span>
-                            <span class="platform-chip"><i class="fas fa-store"></i> RuStore</span>
-                        </div>
+                                <span class="platform-chip"><i class="fas fa-download"></i> Скачать с сайта</span>
+                                <span class="platform-chip"><i class="fas fa-store"></i> RuStore</span>
+                            </div>
 
                             <div class="price-line">Цена: <span class="price-free">Бесплатно</span></div>
 
-                            <!-- Замените href="#" на прямую ссылку на файл игры -->
                             <a href="#" class="download-btn"><i class="fas fa-download"></i> СКАЧАТЬ С САЙТА</a>
                         </div>
                     </div>
@@ -536,55 +500,27 @@
                     <button class="price-btn" id="toggleCard" aria-expanded="false">Подробнее</button>
 
                     <div class="store-icons">
-                    <a href="#" title="Скачать с сайта" aria-label="Скачать с сайта">
-                     <i class="fas fa-download"></i>
-                 </a>
-                 <a href="#" title="RuStore" aria-label="RuStore">
-                 <i class="fas fa-store"></i>
-             </a>
-         </div>
-
-                        <!-- RuStore (замените href на страницу игры в RuStore) -->
+                        <a href="#" title="Скачать с сайта" aria-label="Скачать с сайта">
+                            <i class="fas fa-download"></i>
+                        </a>
                         <a href="#" title="RuStore" aria-label="RuStore">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="24" height="24" rx="4" fill="#FF7E5F"/>
-                <path d="M6 12L12 8L18 12L12 16L6 12Z" fill="white"/>
-            </svg>
-        </a>
-    </div>
-
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" title="MY.GAMES" aria-label="MY.GAMES" style="cursor: pointer;">
-                            <rect x="2" y="2" width="20" height="20" rx="4" stroke="white" stroke-width="1.5"/>
-                            <path d="M7 10L12 15L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M7 14L12 9L17 14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-
-                        <i class="fa-solid fa-mobile-screen-button" title="Huawei AppGallery" aria-label="Huawei AppGallery"></i>
+                            <i class="fas fa-store"></i>
+                        </a>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- News -->
     <section id="news" class="section">
         <div class="container">
             <h2 class="section-title">Последние <span>Новости</span></h2>
-            <div class="news-grid">
-                <div class="news-card">
-                    <h3>Запустили новый сайт!</h3>
-                    <p>Мы создали сайт, над которым сейчас активно работаем, чтобы он был удобнее, работоспособнее и информативнее.</p>
-                </div>
-                <div class="news-card">
-                    <h3>Начало разработки игры</h3>
-                    <p>Сейчас мы активно ведём разработку нашей новой игры, после ухода из Roblox. Следите за обновлениями!</p>
-                </div>
+            <div class="news-grid" id="newsGrid">
+                <!-- Новости загружаются из data.json -->
             </div>
         </div>
     </section>
 
-    <!-- FAQ -->
     <section id="faq" class="section">
         <div class="container">
             <h2 class="section-title">Частые <span>Вопросы</span></h2>
@@ -611,7 +547,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <p>&copy; 2026 FlashStudio Games. Все права защищены.</p>
@@ -619,7 +554,84 @@
     </footer>
 
     <script>
-        /* ============ ЛИСТЬЯ ИЗ НАВИГАЦИИ ============ */
+        // ============================================
+        // ЗАГРУЗКА ДАННЫХ ИЗ data.json
+        // ============================================
+        const REPO_OWNER = 'ВАШ_ЮЗЕРНЕЙМ'; // ← ЗАМЕНИТЕ на ваш username GitHub
+        const REPO_NAME = 'ВАШ_РЕПО';       // ← ЗАМЕНИТЕ на название репозитория
+
+        async function loadSiteData() {
+            try {
+                const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/data.json?t=${Date.now()}`);
+                if (!response.ok) throw new Error('Не удалось загрузить данные');
+                const data = await response.json();
+                const content = atob(data.content);
+                const siteData = JSON.parse(content);
+
+                // Проверка статуса сайта
+                if (siteData.siteStatus === 'maintenance') {
+                    document.getElementById('maintenanceOverlay').style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                    return;
+                }
+
+                // Обновление статуса игры
+                updateGameStatus(siteData.game.devStatus, siteData.game.activeStatus);
+
+                // Обновление новостей
+                renderNews(siteData.news);
+            } catch (error) {
+                console.error('Ошибка загрузки данных:', error);
+                // Если не удалось загрузить — показываем дефолтные данные
+                renderNews([
+                    { title: 'Запустили новый сайт!', text: 'Мы создали сайт, над которым сейчас активно работаем, чтобы он был удобнее, работоспособнее и информативнее.' },
+                    { title: 'Начало разработки игры', text: 'Сейчас мы активно ведём разработку нашей новой игры, после ухода из Roblox. Следите за обновлениями!' }
+                ]);
+            }
+        }
+
+        function updateGameStatus(devStatus, activeStatus) {
+            const devBadge = document.getElementById('devStatusBadge');
+            const activeBadge = document.getElementById('activeStatusBadge');
+
+            const devMap = {
+                'dev': { class: 'dev-dev', icon: 'fa-hammer', text: 'В разработке' },
+                'alpha': { class: 'dev-alpha', icon: 'fa-flask', text: 'Альфа' },
+                'release': { class: 'dev-release', icon: 'fa-rocket', text: 'Релиз' }
+            };
+
+            const activeMap = {
+                'online': { class: 'act-online', text: 'Онлайн' },
+                'offline': { class: 'act-offline', text: 'Офлайн' },
+                'maintenance': { class: 'act-maint', text: 'Тех. работы' }
+            };
+
+            const dev = devMap[devStatus] || devMap['dev'];
+            const active = activeMap[activeStatus] || activeMap['online'];
+
+            devBadge.className = `status-badge ${dev.class}`;
+            devBadge.innerHTML = `<i class="fas ${dev.icon}"></i> ${dev.text}`;
+
+            activeBadge.className = `status-badge ${active.class}`;
+            activeBadge.innerHTML = `<span class="dot"></span> ${active.text}`;
+        }
+
+        function renderNews(newsArray) {
+            const grid = document.getElementById('newsGrid');
+            grid.innerHTML = newsArray.map(n => `
+                <div class="news-card">
+                    <h3>${n.title}</h3>
+                    <p>${n.text}</p>
+                </div>
+            `).join('');
+        }
+
+        // Загружаем данные при старте
+        loadSiteData();
+
+        // ============================================
+        // ЛИСТЬЯ
+        // ============================================
         const leavesBox = document.getElementById('leaves');
         const headerEl  = document.getElementById('header');
 
@@ -650,7 +662,9 @@
         for (let i = 0; i < 5; i++) setTimeout(spawnLeaf, i * 250);
         setInterval(spawnLeaf, 700);
 
-        /* ============ РАСКРЫТИЕ КАРТОЧКИ ============ */
+        // ============================================
+        // РАСКРЫТИЕ КАРТОЧКИ
+        // ============================================
         const gameCard  = document.getElementById('gameCard');
         const toggleBtn = document.getElementById('toggleCard');
 
@@ -673,7 +687,9 @@
             if (e.key === 'Escape' && gameCard.classList.contains('expanded')) setCardState(false);
         });
 
-        /* ============ ПРЕЖНИЕ СКРИПТЫ ============ */
+        // ============================================
+        // АНИМАЦИЯ СЕКЦИЙ И FAQ
+        // ============================================
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach(entry => {
