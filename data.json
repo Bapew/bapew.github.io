@@ -1,7 +1,7 @@
 {
   "siteStatus": "online",
   "ticker": {
-    "enabled": enable,
+    "enabled": true,
     "message": " Новый апдейт Final Bell уже доступен!",
     "color": "#ff7e5f",
     "icon": "fa-bell",
