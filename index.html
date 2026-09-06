@@ -560,12 +560,24 @@
         const REPO_OWNER = 'Bapew'; // ← ЗАМЕНИТЕ на ваш username GitHub
         const REPO_NAME = 'bapew.github.io';       // ← ЗАМЕНИТЕ на название репозитория
 
+        // Вспомогательная функция для правильного декодирования кириллицы из Base64
+        function base64ToUtf8(base64) {
+            const binaryString = atob(base64);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return new TextDecoder('utf-8').decode(bytes);
+        }
+
         async function loadSiteData() {
             try {
                 const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/data.json?t=${Date.now()}`);
                 if (!response.ok) throw new Error('Не удалось загрузить данные');
                 const data = await response.json();
-                const content = atob(data.content);
+                
+                // Используем правильную функцию декодирования вместо простого atob()
+                const content = base64ToUtf8(data.content);
                 const siteData = JSON.parse(content);
 
                 // Проверка статуса сайта
