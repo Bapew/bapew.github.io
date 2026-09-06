@@ -1,8 +1,8 @@
 {
   "siteStatus": "online",
   "game": {
-    "devStatus": "release",
-    "activeStatus": "maintenance"
+    "devStatus": "dev",
+    "activeStatus": "offline"
   },
   "news": [
     {
