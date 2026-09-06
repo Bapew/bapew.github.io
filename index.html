@@ -16,16 +16,14 @@
             --text-light: #fff5f0;
             --sunset-orange: #ff7e5f;
             --sunset-pink: #feb47b;
-            --card-glass: rgba(36, 24, 54, 0.65);
-            --border-color: rgba(255, 126, 95, 0.2);
+            --amber: #ffc46b;
+            --card-glass: rgba(255, 255, 255, 0.07);
+            --border-color: rgba(255, 126, 95, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.12);
             --shadow: rgba(0, 0, 0, 0.3);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Montserrat', sans-serif;
@@ -41,96 +39,92 @@
         body::before {
             content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: url('images/FlashIcon.jpg') center/cover no-repeat;
             filter: blur(8px);
             z-index: -1;
             opacity: 0.9;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* ============================================
+           ПАДАЮЩИЕ ЛИСТЬЯ (вылетают из-под навигации)
+           ============================================ */
+        #leaves {
+            position: fixed;
+            left: 0; right: 0;
+            top: 72px; /* JS уточнит по высоте шапки */
+            height: 0;
+            overflow: visible;
+            pointer-events: none;
+            z-index: 950; /* ниже шапки (1000), чтобы листья выезжали из-под неё */
         }
 
-        /* --- Header --- */
+        .leaf {
+            position: absolute;
+            top: -16px;
+            opacity: 0;
+            animation: leafFall 6s ease-in forwards;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,.35));
+            will-change: transform, opacity;
+            user-select: none;
+        }
+
+        @keyframes leafFall {
+            0%   { transform: translate3d(0, -12px, 0) rotate(0deg); opacity: 0; }
+            12%  { opacity: .95; }
+            40%  { transform: translate3d(var(--sway), calc(var(--fall) * .4), 0) rotate(calc(var(--rot) * .5)); }
+            70%  { transform: translate3d(calc(var(--sway) * -.5), calc(var(--fall) * .75), 0) rotate(var(--rot)); opacity: .9; }
+            100% { transform: translate3d(var(--sway), var(--fall), 0) rotate(calc(var(--rot) * 1.4)); opacity: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .leaf { display: none; }
+        }
+
+        /* --- Header (матовое стекло) --- */
         header {
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             width: 100%;
-            background: rgba(20, 13, 33, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(22, 12, 26, 0.55);
+            backdrop-filter: blur(16px) saturate(140%);
+            -webkit-backdrop-filter: blur(16px) saturate(140%);
             border-bottom: 1px solid var(--border-color);
             z-index: 1000;
             padding: 16px 0;
         }
 
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .left-section { display: flex; align-items: center; gap: 12px; }
 
-        .left-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
+        .social-icons { display: flex; gap: 10px; }
         .social-icons a {
             color: var(--text-light);
             font-size: 1.4rem;
             transition: all 0.3s ease;
         }
+        .social-icons a:hover { color: var(--sunset-orange); transform: scale(1.1); }
 
-        .social-icons a:hover {
-            color: var(--sunset-orange);
-            transform: scale(1.1);
-        }
-
-        .logo-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-img {
-            height: 40px;
-            width: auto;
-        }
-
+        .logo-wrapper { display: flex; align-items: center; gap: 10px; }
+        .logo-img { height: 40px; width: auto; }
         .logo-text {
-            font-size: 24px;
-            font-weight: 800;
+            font-size: 24px; font-weight: 800;
             color: var(--text-light);
             transition: transform 0.3s ease;
         }
+        .logo-text:hover { transform: scale(1.06); }
 
-        .logo-text:hover {
-            transform: scale(1.06);
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 28px;
-        }
-
+        .nav-menu { display: flex; gap: 28px; }
         .nav-menu a {
             color: var(--text-light);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 16px;
+            font-weight: 600; font-size: 16px;
             transition: color 0.3s;
         }
-
-        .nav-menu a:hover {
-            color: var(--sunset-orange);
-        }
+        .nav-menu a:hover { color: var(--sunset-orange); }
 
         /* --- Sections --- */
         .section {
@@ -139,11 +133,7 @@
             transform: translateY(30px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-
-        .section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .section.visible { opacity: 1; transform: translateY(0); }
 
         .section-title {
             text-align: center;
@@ -152,30 +142,24 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-
-        .section-title span {
-            color: var(--sunset-orange);
-        }
+        .section-title span { color: var(--sunset-orange); }
 
         /* --- Hero --- */
         .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            min-height: 90vh;
+            display: flex; align-items: center; justify-content: center;
             text-align: center;
             padding-top: 80px;
         }
-
         .hero h1 {
             font-size: 3.8rem;
             margin-bottom: 20px;
             background: linear-gradient(to right, var(--sunset-orange), var(--sunset-pink));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-
         .hero p {
             font-size: 1.5rem;
             max-width: 700px;
@@ -188,43 +172,46 @@
             display: inline-block;
             padding: 14px 36px;
             background: linear-gradient(45deg, var(--sunset-orange), #ff416c);
-            color: white;
-            text-decoration: none;
+            color: white; text-decoration: none;
             border-radius: 30px;
-            font-weight: 700;
-            font-size: 16px;
+            font-weight: 700; font-size: 16px;
             transition: all 0.4s ease;
             box-shadow: 0 6px 20px rgba(255, 126, 95, 0.4);
         }
+        .btn:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(255, 126, 95, 0.7); }
 
-        .btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(255, 126, 95, 0.7);
-        }
-
-        /* --- Games Grid --- */
+        /* ============================================
+           КАРТОЧКИ ИГР (стекло + раскрытие)
+           ============================================ */
         .market-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            display: flex;
+            flex-wrap: wrap;
             gap: 30px;
-            justify-items: center;
+            justify-content: center;
+            align-items: flex-start;
         }
 
         .product-card {
             background: var(--card-glass);
-            border: 1px solid var(--border-color);
+            backdrop-filter: blur(16px) saturate(130%);
+            -webkit-backdrop-filter: blur(16px) saturate(130%);
+            border: 1px solid var(--glass-border);
             border-radius: 14px;
             padding: 22px 16px;
             width: 100%;
             max-width: 280px;
             text-align: center;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            transition: max-width 0.6s cubic-bezier(.22,1,.36,1),
+                        transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s;
         }
-
         .product-card:hover {
-            transform: translateY(-12px);
+            transform: translateY(-8px);
             box-shadow: 0 12px 30px rgba(255, 126, 95, 0.2);
             border-color: var(--sunset-orange);
+        }
+        .product-card.expanded {
+            max-width: 720px;
+            transform: none;
         }
 
         .product-status {
@@ -233,128 +220,186 @@
             color: var(--sunset-pink);
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
+            font-size: 12px; font-weight: 700;
             text-transform: uppercase;
             margin-bottom: 16px;
         }
 
         .product-img-wrapper {
-            width: 180px;
-            height: 180px;
+            width: 180px; height: 180px;
             margin: 0 auto 20px;
             border-radius: 10px;
             overflow: hidden;
             border: 1px solid rgba(255,255,255,0.08);
             background: rgba(0,0,0,0.1);
         }
+        .product-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        .product-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+        .product-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 20px; }
 
-        .product-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-
+        /* Кнопка "Подробнее / Свернуть" */
         .price-btn {
             display: block;
             width: 100%;
             padding: 12px;
             background: var(--sunset-orange);
             color: white;
-            text-decoration: none;
+            border: none;
             border-radius: 8px;
             font-weight: 700;
+            font-size: 15px;
+            font-family: inherit;
+            cursor: pointer;
             margin-bottom: 18px;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .price-btn:hover { background: #ff6b4d; transform: translateY(-1px); }
+
+        /* --- Раскрывающаяся часть карточки --- */
+        .card-details {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.55s cubic-bezier(.22,1,.36,1);
+        }
+        .details-inner {
+            overflow: hidden;
+            min-height: 0;
+            opacity: 0;
+            text-align: left;
+            transition: opacity 0.4s ease 0.05s;
+        }
+        .product-card.expanded .card-details { grid-template-rows: 1fr; }
+        .product-card.expanded .details-inner { opacity: 1; }
+
+        .statuses {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            margin-bottom: 14px;
+        }
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .5px;
+            border: 1px solid;
+            background: rgba(255,255,255,.06);
+            backdrop-filter: blur(6px);
+        }
+        /* Статус разработки: dev-dev / dev-alpha / dev-release */
+        .dev-dev     { color: var(--amber);  border-color: rgba(255,196,107,.45); }
+        .dev-alpha   { color: #7cc4ff;       border-color: rgba(124,196,255,.45); }
+        .dev-release { color: #7dffa8;       border-color: rgba(125,255,168,.45); }
+        /* Статус активности: act-online / act-offline / act-maint */
+        .act-online  { color: #7dffa8;       border-color: rgba(125,255,168,.45); }
+        .act-offline { color: #ff8080;       border-color: rgba(255,128,128,.45); }
+        .act-maint   { color: #ffd97a;       border-color: rgba(255,217,122,.45); }
+        .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: currentColor;
+            box-shadow: 0 0 8px currentColor;
+            animation: pulse 1.6s infinite;
+        }
+        @keyframes pulse { 50% { opacity: .35; } }
+
+        .game-desc {
+            font-size: 14px;
+            line-height: 1.6;
+            color: rgba(255,245,240,.85);
+            margin-bottom: 16px;
         }
 
-        .price-btn:hover {
-            background: #ff6b4d;
+        .platforms { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+        .platform-chip {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 12px;
+            border-radius: 10px;
+            background: rgba(255,255,255,.08);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(8px);
+            font-size: 12px; font-weight: 600;
         }
+        .platform-chip i { color: var(--sunset-pink); }
+
+        .price-line { font-size: 14px; margin-bottom: 4px; color: rgba(255,245,240,.8); }
+        .price-free { color: #7dffa8; font-weight: 800; font-size: 16px; }
+
+        /* Большая кнопка скачивания */
+        .download-btn {
+            position: relative;
+            overflow: hidden;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%;
+            padding: 16px 20px;
+            margin-top: 12px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, var(--sunset-orange), #ff416c);
+            color: #fff; text-decoration: none;
+            font-size: 1.1rem; font-weight: 800;
+            box-shadow: 0 8px 24px rgba(255, 65, 108, 0.45);
+            transition: transform .3s, box-shadow .3s;
+        }
+        .download-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,65,108,.6); }
+        .download-btn::after {
+            content: '';
+            position: absolute; top: 0; left: -60%;
+            width: 40%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+            transform: skewX(-20deg);
+            animation: shine 2.8s infinite;
+        }
+        @keyframes shine { 0% { left: -60%; } 60%, 100% { left: 120%; } }
 
         .store-icons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 16px; /* равномерные отступы */
-            flex-wrap: wrap;
-            margin-top: 16px;
-            font-size: 0; /* убираем пробелы между inline-block элементами */
+            display: flex; justify-content: center; align-items: center;
+            gap: 16px; flex-wrap: wrap;
+            margin-top: 16px; font-size: 0;
         }
-
         .store-icons > * {
-            width: 24px;
-            height: 24px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            width: 24px; height: 24px;
+            display: inline-flex; align-items: center; justify-content: center;
             color: rgba(255, 255, 255, 0.7);
             transition: color 0.3s ease, transform 0.2s ease;
         }
+        .store-icons i, .store-icons svg { cursor: pointer; }
+        .store-icons i:hover, .store-icons svg:hover { color: white; transform: scale(1.1); }
+        .store-icons svg:hover rect, .store-icons svg:hover path { fill: white !important; stroke: white !important; }
 
-        .store-icons i,
-        .store-icons svg {
-           cursor: pointer;
-        }
-
-        .store-icons i:hover,
-        .store-icons svg:hover {
-            color: white;
-            transform: scale(1.1);
-        }
-
-        /* Для SVG — фикс цвета при hover (чтобы fill тоже менялся) */
-        .store-icons svg:hover rect,
-        .store-icons svg:hover path {
-            fill: white !important;
-            stroke: white !important;
-        }
-        
-        /* --- News & FAQ --- */
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
+        /* --- News & FAQ (стекло) --- */
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
 
         .news-card, .faq-item {
             background: var(--card-glass);
-            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
             border-radius: 12px;
             padding: 20px;
         }
+        .news-card h3 { color: var(--sunset-pink); margin-bottom: 8px; }
+        .news-card p { font-size: 14px; line-height: 1.6; color: rgba(255,245,240,.85); }
 
+        .faq-item { margin-bottom: 14px; }
         .faq-question {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 600;
+            display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; font-weight: 600;
         }
-
+        .faq-question i { transition: transform .3s; }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
         .faq-answer {
             padding-top: 12px;
-            max-height: 0;
-            overflow: hidden;
+            max-height: 0; overflow: hidden;
             transition: max-height 0.4s ease;
+            font-size: 14px; color: rgba(255,245,240,.85);
         }
+        .faq-item.active .faq-answer { max-height: 200px; }
 
-        .faq-item.active .faq-answer {
-            max-height: 200px;
-        }
-
-        /* --- Footer --- */
+        /* --- Footer (стекло) --- */
         footer {
             padding: 35px 0;
             text-align: center;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-top: 1px solid var(--border-color);
             margin-top: 50px;
         }
@@ -366,13 +411,17 @@
             .nav-menu { flex-direction: column; gap: 12px; }
             .left-section { flex-direction: column; align-items: flex-start; gap: 10px; }
             .section-title { font-size: 2.2rem; }
+            .product-card.expanded { max-width: 100%; }
         }
     </style>
 </head>
-<body style="background: linear-gradient(135deg, #140d21, #2b1432, #5c243a, #9e433f); min-height: 100vh; overflow-x: hidden; overflow-y: auto;">
+<body style="background: linear-gradient(135deg, #150a10 0%, #33141f 40%, #5e241a 75%, #8f4b26 100%); min-height: 100vh; overflow-x: hidden; overflow-y: auto;">
+
+    <!-- Контейнер для листьев, падающих из навигации -->
+    <div id="leaves" aria-hidden="true"></div>
 
     <!-- Header -->
-    <header>
+    <header id="header">
         <div class="container nav-container">
             <div class="left-section">
                 <div class="social-icons">
@@ -398,7 +447,7 @@
         <div class="container">
             <div class="hero">
                 <div>
-                    <h1>Добро пожаловать в <span>FlashStudio</span></h1>
+                    <h1>Добро пожаловать в FlashStudio</h1>
                     <p>Создаём инди-игры с душой. Наша миссия — вдохновлять, развлекать и удивлять.</p>
                     <a href="#games" class="btn">Наши проекты</a>
                 </div>
@@ -411,35 +460,69 @@
         <div class="container">
             <h2 class="section-title">Наши <span>Игры</span></h2>
             <div class="market-grid">
-                <div class="product-card">
+
+                <div class="product-card" id="gameCard">
                     <div class="product-status">В разработке</div>
                     <div class="product-img-wrapper">
                         <img src="images/Game1.jpg" alt="Final Bell" class="product-img">
                     </div>
                     <h3 class="product-title">Final Bell</h3>
-                    <a href="#" class="price-btn">Бесплатно</a>
-                    <div class="store-icons">
-                    <!-- Epic Games -->
-                    <i class="fa-brands fa-epic-games" title="Epic Games Store" aria-label="Epic Games Store"></i>
 
-                    <!-- RuStore -->
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" title="RuStore" aria-label="RuStore" style="cursor: pointer;">
-                        <rect width="24" height="24" rx="4" fill="#FF7E5F"/>
-                        <path d="M6 12L12 8L18 12L12 16L6 12Z" fill="white"/>
-                    </svg>
+                    <!-- Раскрывающееся описание -->
+                    <div class="card-details">
+                        <div class="details-inner">
+                            <div class="statuses">
+                                <!-- Статус разработки: dev-dev (в разработке) / dev-alpha (альфа) / dev-release (релиз) -->
+                                <span class="status-badge dev-dev"><i class="fas fa-hammer"></i> В разработке</span>
+                                <!-- Статус активности: act-online / act-offline / act-maint (тех. работы) -->
+                                <span class="status-badge act-online"><span class="dot"></span> Онлайн</span>
+                            </div>
 
-                    <!-- MY.GAMES -->
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" title="MY.GAMES" aria-label="MY.GAMES" style="cursor: pointer;">
-                        <rect x="2" y="2" width="20" height="20" rx="4" stroke="white" stroke-width="1.5"/>
-                        <path d="M7 10L12 15L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M7 14L12 9L17 14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                            <p class="game-desc">
+                                Асимметричный мультиплеерный хоррор (до 5 человек в комнате): команда из 4 игроков
+                                проникает в школы, чтобы найти и украсть спрятанные правительством файлы и документы.
+                                Но в каждой школе их охраняет аниматроник, которым управляет пятый игрок.
+                                Работайте в команде, отвлекайте охранника и заберите документы до последнего звонка!
+                            </p>
 
-                    <!-- Huawei AppGallery -->
-                    <i class="fa-solid fa-mobile-screen-button" title="Huawei AppGallery" aria-label="Huawei AppGallery"></i>
+                            <div class="platforms">
+                                <span class="platform-chip"><i class="fa-brands fa-epic-games"></i> Epic Games Store</span>
+                                <span class="platform-chip"><i class="fa-brands fa-windows"></i> Windows</span>
+                                <span class="platform-chip"><i class="fa-solid fa-mobile-screen-button"></i> RuStore</span>
+                                <span class="platform-chip"><i class="fa-brands fa-android"></i> AppGallery</span>
+                            </div>
+
+                            <div class="price-line">Цена: <span class="price-free">Бесплатно</span></div>
+
+                            <!-- Замените href="#" на прямую ссылку на файл игры на вашем сайте -->
+                            <a href="#" class="download-btn"><i class="fas fa-download"></i> СКАЧАТЬ С САЙТА</a>
                         </div>
                     </div>
+
+                    <button class="price-btn" id="toggleCard" aria-expanded="false">Подробнее</button>
+
+                    <div class="store-icons">
+                        <!-- Epic Games -->
+                        <i class="fa-brands fa-epic-games" title="Epic Games Store" aria-label="Epic Games Store"></i>
+
+                        <!-- RuStore -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" title="RuStore" aria-label="RuStore" style="cursor: pointer;">
+                            <rect width="24" height="24" rx="4" fill="#FF7E5F"/>
+                            <path d="M6 12L12 8L18 12L12 16L6 12Z" fill="white"/>
+                        </svg>
+
+                        <!-- MY.GAMES -->
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" title="MY.GAMES" aria-label="MY.GAMES" style="cursor: pointer;">
+                            <rect x="2" y="2" width="20" height="20" rx="4" stroke="white" stroke-width="1.5"/>
+                            <path d="M7 10L12 15L17 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M7 14L12 9L17 14" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+
+                        <!-- Huawei AppGallery -->
+                        <i class="fa-solid fa-mobile-screen-button" title="Huawei AppGallery" aria-label="Huawei AppGallery"></i>
+                    </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -496,21 +579,80 @@
     </footer>
 
     <script>
+        /* ============================================
+           1. МАЛЕНЬКИЕ ЛИСТЬЯ, ПАДАЮЩИЕ ИЗ НАВИГАЦИИ
+           ============================================ */
+        const leavesBox = document.getElementById('leaves');
+        const headerEl  = document.getElementById('header');
+
+        // Листья стартуют ровно у нижней кромки шапки
+        function placeLeavesBox() {
+            leavesBox.style.top = headerEl.offsetHeight + 'px';
+        }
+        placeLeavesBox();
+        window.addEventListener('resize', placeLeavesBox);
+
+        function spawnLeaf() {
+            if (document.hidden) return;
+            const leaf  = document.createElement('span');
+            const icons = ['🍁', ''];
+            leaf.className   = 'leaf';
+            leaf.textContent = icons[Math.floor(Math.random() * icons.length)];
+
+            leaf.style.left = Math.random() * 100 + '%';
+            leaf.style.fontSize = (9 + Math.random() * 7) + 'px';          // маленькие: 9–16px
+            leaf.style.animationDuration = (4 + Math.random() * 4) + 's'; // 4–8 сек
+            leaf.style.setProperty('--fall', (140 + Math.random() * 160) + 'px'); // длина падения 140–300px
+            leaf.style.setProperty('--sway', (Math.random() * 60 - 30) + 'px');   // покачивание
+            leaf.style.setProperty('--rot',  Math.floor(Math.random() * 360) + 'deg');
+
+            leavesBox.appendChild(leaf);
+            leaf.addEventListener('animationend', () => leaf.remove());
+        }
+
+        // Небольшой стартовый "залп" + постоянное появление
+        for (let i = 0; i < 5; i++) setTimeout(spawnLeaf, i * 250);
+        setInterval(spawnLeaf, 700); // реже/чаще — меняйте число
+
+        /* ============================================
+           2. РАСКРЫТИЕ КАРТОЧКИ ИГРЫ
+           ============================================ */
+        const gameCard  = document.getElementById('gameCard');
+        const toggleBtn = document.getElementById('toggleCard');
+
+        function setCardState(expanded) {
+            gameCard.classList.toggle('expanded', expanded);
+            toggleBtn.setAttribute('aria-expanded', expanded);
+            toggleBtn.innerHTML = expanded
+                ? '<i class="fas fa-chevron-up"></i> Свернуть'
+                : 'Подробнее';
+            if (expanded) {
+                setTimeout(() => gameCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 350);
+            }
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            setCardState(!gameCard.classList.contains('expanded'));
+        });
+
+        // Свернуть по Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && gameCard.classList.contains('expanded')) setCardState(false);
+        });
+
+        /* ============================================
+           3. ПРЕЖНИЕ СКРИПТЫ
+           ============================================ */
         // Анимация появления секций при прокрутке
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
                 });
             },
             { threshold: 0.1 }
         );
-
-        document.querySelectorAll('.section').forEach(sec => {
-            observer.observe(sec);
-        });
+        document.querySelectorAll('.section').forEach(sec => observer.observe(sec));
 
         // Плавная прокрутка по якорям
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -518,10 +660,7 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+                    window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
                 }
             });
         });
@@ -529,8 +668,7 @@
         // FAQ аккордеон
         document.querySelectorAll('.faq-question').forEach(q => {
             q.addEventListener('click', () => {
-                const item = q.closest('.faq-item');
-                item.classList.toggle('active');
+                q.closest('.faq-item').classList.toggle('active');
             });
         });
     </script>
