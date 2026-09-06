@@ -372,6 +372,63 @@
             font-size: 14px;
             color: rgba(255,245,240,.75);
         }
+
+            /* --- Две кнопки скачивания --- */
+        .download-buttons {
+            display: flex;
+            gap: 12px;
+            margin: 12px 0 16px;
+        }
+
+        .download-btn {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, var(--sunset-orange), #ff416c);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 800;
+            box-shadow: 0 8px 24px rgba(255, 65, 108, 0.45);
+            transition: transform .3s, box-shadow .3s, opacity .3s;
+        }
+
+        .download-btn:hover:not(.disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(255,65,108,.6);
+        }
+
+        .download-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -60%;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+            transform: skewX(-20deg);
+            animation: shine 2.8s infinite;
+        }
+
+        /* Неактивное состояние */
+        .download-btn.disabled {
+            background: linear-gradient(45deg, #666, #888);
+            box-shadow: none;
+            cursor: not-allowed;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .download-btn.disabled::after {
+            display: none;
+        }
+        
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.6rem; }
             .hero p { font-size: 1.2rem; }
@@ -492,7 +549,14 @@
 
                             <div class="price-line">Цена: <span class="price-free">Бесплатно</span></div>
 
-                            <a href="#" class="download-btn"><i class="fas fa-download"></i> СКАЧАТЬ С САЙТА</a>
+                            <div class="download-buttons">
+                                <a href="#" class="download-btn" id="downloadSite">
+                                    <i class="fas fa-download"></i> СКАЧАТЬ С САЙТА
+                                </a>
+                                <a href="#" class="download-btn" id="downloadRuStore">
+                                    <i class="fas fa-store"></i> СКАЧАТЬ С RUSTORE
+                                </a>
+                            </div>
                         </div>
                     </div>
 
@@ -601,31 +665,49 @@
             }
         }
 
-        function updateGameStatus(devStatus, activeStatus) {
-            const devBadge = document.getElementById('devStatusBadge');
-            const activeBadge = document.getElementById('activeStatusBadge');
+    function updateGameStatus(devStatus, activeStatus) {
+        const devBadge = document.getElementById('devStatusBadge');
+        const activeBadge = document.getElementById('activeStatusBadge');
 
-            const devMap = {
-                'dev': { class: 'dev-dev', icon: 'fa-hammer', text: 'В разработке' },
-                'alpha': { class: 'dev-alpha', icon: 'fa-flask', text: 'Альфа' },
-                'release': { class: 'dev-release', icon: 'fa-rocket', text: 'Релиз' }
-            };
+        const devMap = {
+            'dev': { class: 'dev-dev', icon: 'fa-hammer', text: 'В разработке' },
+            'alpha': { class: 'dev-alpha', icon: 'fa-flask', text: 'Альфа' },
+            'release': { class: 'dev-release', icon: 'fa-rocket', text: 'Релиз' }
+        };
 
-            const activeMap = {
-                'online': { class: 'act-online', text: 'Онлайн' },
-                'offline': { class: 'act-offline', text: 'Офлайн' },
-                'maintenance': { class: 'act-maint', text: 'Тех. работы' }
-            };
+        const activeMap = {
+            'online': { class: 'act-online', text: 'Онлайн' },
+            'offline': { class: 'act-offline', text: 'Офлайн' },
+            'maintenance': { class: 'act-maint', text: 'Тех. работы' }
+        };
 
-            const dev = devMap[devStatus] || devMap['dev'];
-            const active = activeMap[activeStatus] || activeMap['online'];
+        const dev = devMap[devStatus] || devMap['dev'];
+        const active = activeMap[activeStatus] || activeMap['online'];
 
-            devBadge.className = `status-badge ${dev.class}`;
-            devBadge.innerHTML = `<i class="fas ${dev.icon}"></i> ${dev.text}`;
+        devBadge.className = `status-badge ${dev.class}`;
+        devBadge.innerHTML = `<i class="fas ${dev.icon}"></i> ${dev.text}`;
 
-            activeBadge.className = `status-badge ${active.class}`;
-            activeBadge.innerHTML = `<span class="dot"></span> ${active.text}`;
+        activeBadge.className = `status-badge ${active.class}`;
+        activeBadge.innerHTML = `<span class="dot"></span> ${active.text}`;
+
+        // Управление кнопками скачивания
+        const downloadSite = document.getElementById('downloadSite');
+        const downloadRuStore = document.getElementById('downloadRuStore');
+    
+        if (devStatus === 'dev') {
+            // В разработке - кнопки неактивны
+            downloadSite.classList.add('disabled');
+            downloadRuStore.classList.add('disabled');
+            downloadSite.removeAttribute('href');
+            downloadRuStore.removeAttribute('href');
+        } else {
+            // Альфа или релиз - кнопки активны
+            downloadSite.classList.remove('disabled');
+            downloadRuStore.classList.remove('disabled');
+            downloadSite.href = '#'; // Замените на реальную ссылку
+            downloadRuStore.href = '#'; // Замените на реальную ссылку RuStore
         }
+    }
 
         function renderNews(newsArray) {
             const grid = document.getElementById('newsGrid');
