@@ -428,6 +428,92 @@
         .download-btn.disabled::after {
             display: none;
         }
+
+        /* --- Бегущая строка --- */
+.ticker-wrapper {
+    position: fixed;
+    top: 72px; /* Высота навигации */
+    left: 0;
+    right: 0;
+    z-index: 998;
+    overflow: hidden;
+    height: 36px;
+    display: none; /* Скрыта по умолчанию, показывается через JS */
+}
+
+.ticker-wrapper.active {
+    display: block;
+}
+
+.ticker {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass-border);
+    animation: tickerScroll 20s linear infinite;
+    white-space: nowrap;
+    padding: 0 20px;
+}
+
+@keyframes tickerScroll {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+.ticker-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+.ticker-icon {
+    font-size: 16px;
+    animation: tickerPulse 2s ease-in-out infinite;
+}
+
+@keyframes tickerPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+/* Сдвигаем контент ниже, когда бегущая строка активна */
+body.ticker-active header {
+    top: 0;
+}
+
+body.ticker-active #leaves {
+    top: 108px; /* 72px + 36px */
+}
+
+body.ticker-active .hero,
+body.ticker-active .section {
+    padding-top: 136px; /* Учитываем бегущую строку */
+}
+
+@media (max-width: 768px) {
+    .ticker-wrapper {
+        top: 72px;
+        height: 32px;
+    }
+    
+    .ticker-content {
+        font-size: 12px;
+    }
+    
+    body.ticker-active #leaves {
+        top: 104px;
+    }
+    
+    body.ticker-active .hero,
+    body.ticker-active .section {
+        padding-top: 124px;
+    }
+}
         
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.6rem; }
@@ -483,6 +569,13 @@
 
     <div id="leaves" aria-hidden="true"></div>
 
+    <!-- Бегущая строка -->
+<div class="ticker-wrapper" id="tickerWrapper">
+    <div class="ticker" id="ticker">
+        <div class="ticker-content" id="tickerContent"></div>
+    </div>
+</div>
+    
     <header id="header">
         <div class="container nav-container">
             <div class="left-section">
@@ -634,36 +727,77 @@
         }
 
         async function loadSiteData() {
-            try {
-                const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/data.json?t=${Date.now()}`);
-                if (!response.ok) throw new Error('Не удалось загрузить данные');
-                const data = await response.json();
-                
-                // Используем правильную функцию декодирования вместо простого atob()
-                const content = base64ToUtf8(data.content);
-                const siteData = JSON.parse(content);
-
-                // Проверка статуса сайта
-                if (siteData.siteStatus === 'maintenance') {
-                    document.getElementById('maintenanceOverlay').style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                    return;
-                }
-
-                // Обновление статуса игры
-                updateGameStatus(siteData.game.devStatus, siteData.game.activeStatus);
-
-                // Обновление новостей
-                renderNews(siteData.news);
-            } catch (error) {
-                console.error('Ошибка загрузки данных:', error);
-                // Если не удалось загрузить — показываем дефолтные данные
-                renderNews([
-                    { title: 'Ошибка загрузки данных', text: 'Увы, но мы не смогли загрузить данные о последних новостях проекта =(' },
-                    { title: 'Ошибка загрузки данных', text: 'Увы, но мы не смогли загрузить данные о последних новостях проекта =(' }
-                ]);
-            }
+    try {
+        const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/data.json?t=${Date.now()}`);
+        if (!response.ok) throw new Error('Не удалось загрузить данные');
+        const data = await response.json();
+        
+        const binaryString = atob(data.content);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
         }
+        const content = new TextDecoder('utf-8').decode(bytes);
+        const siteData = JSON.parse(content);
+
+        // Проверка статуса сайта
+        if (siteData.siteStatus === 'maintenance') {
+            document.getElementById('maintenanceOverlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            return;
+        }
+
+        // Обновление бегущей строки
+        updateTicker(siteData.ticker);
+
+        // Обновление статуса игры
+        updateGameStatus(siteData.game.devStatus, siteData.game.activeStatus);
+
+        // Обновление новостей
+        renderNews(siteData.news);
+    } catch (error) {
+        console.error('Ошибка загрузки данных:', error);
+        renderNews([
+            { title: 'Ошибка загрузки новостей', text: 'Что-то пошло не так. Увы, но сегодня без новостей =(' },
+            { title: 'Ошибка загрузки новостей', text: 'Что-то пошло не так. Увы, но сегодня без новостей =(' }
+        ]);
+    }
+}
+
+function updateTicker(ticker) {
+    const wrapper = document.getElementById('tickerWrapper');
+    const content = document.getElementById('tickerContent');
+    
+    if (!ticker || !ticker.enabled) {
+        wrapper.classList.remove('active');
+        document.body.classList.remove('ticker-active');
+        return;
+    }
+    
+    wrapper.classList.add('active');
+    document.body.classList.add('ticker-active');
+    
+    // Устанавливаем цвет
+    const tickerElement = document.getElementById('ticker');
+    tickerElement.style.background = `rgba(0, 0, 0, 0.4)`;
+    content.style.color = ticker.color || '#fff5f0';
+    
+    // Формируем содержимое с учётом позиции иконки
+    let iconHTML = ticker.icon ? `<i class="fas ${ticker.icon} ticker-icon"></i>` : '';
+    
+    let html = '';
+    if (ticker.iconPosition === 'left') {
+        html = `${iconHTML}<span>${ticker.message}</span>`;
+    } else if (ticker.iconPosition === 'right') {
+        html = `<span>${ticker.message}</span>${iconHTML}`;
+    } else if (ticker.iconPosition === 'both') {
+        html = `${iconHTML}<span>${ticker.message}</span>${iconHTML}`;
+    } else {
+        html = `<span>${ticker.message}</span>`;
+    }
+    
+    content.innerHTML = html;
+}
 
     function updateGameStatus(devStatus, activeStatus) {
         const devBadge = document.getElementById('devStatusBadge');
