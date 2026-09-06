@@ -4,5 +4,10 @@
     "devStatus": "dev",
     "activeStatus": "offline"
   },
-  "news": []
+  "news": [
+    {
+      "title": "Тест1",
+      "text": "Тест1"
+    }
+  ]
 }
