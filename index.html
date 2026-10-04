@@ -1021,49 +1021,58 @@ function updateTicker(ticker) {
                 q.closest('.faq-item').classList.toggle('active');
             });
         });
-                // ============================================
+        // ============================================
         // ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ
         // ============================================
         const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = themeToggle.querySelector('i');
-        
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            document.body.classList.add('light-theme');
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-        }
-        
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-theme');
+        if (themeToggle) {
+            const themeIcon = themeToggle.querySelector('i');
             
-            if (document.body.classList.contains('light-theme')) {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-                localStorage.setItem('theme', 'light');
-            } else {
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-                localStorage.setItem('theme', 'dark');
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                if (themeIcon) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                }
             }
-        });
+            
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-theme');
+                
+                if (document.body.classList.contains('light-theme')) {
+                    if (themeIcon) {
+                        themeIcon.classList.remove('fa-moon');
+                        themeIcon.classList.add('fa-sun');
+                    }
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    if (themeIcon) {
+                        themeIcon.classList.remove('fa-sun');
+                        themeIcon.classList.add('fa-moon');
+                    }
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
         
         // ============================================
         // КНОПКА НАВЕРХ
         // ============================================
         const scrollTopBtn = document.getElementById('scrollTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
-            }
-        });
-        
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        if (scrollTopBtn) {
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.add('visible');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
+                }
+            });
+            
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
         
         // ============================================
         // МОБИЛЬНОЕ МЕНЮ
@@ -1071,16 +1080,21 @@ function updateTicker(ticker) {
         function toggleMenu() {
             const navMenu = document.getElementById('navMenu');
             const menuToggle = document.querySelector('.menu-toggle');
-            navMenu.classList.toggle('active');
-            menuToggle.classList.toggle('active');
+            if (navMenu && menuToggle) {
+                navMenu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            }
         }
         
-        document.querySelectorAll('.nav-menu a').forEach(link => {
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
             link.addEventListener('click', () => {
                 const navMenu = document.getElementById('navMenu');
                 const menuToggle = document.querySelector('.menu-toggle');
-                navMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
+                if (navMenu && menuToggle) {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
             });
         });
     </script>
