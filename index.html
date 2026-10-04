@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlashStudio | Indie Game Dev</title>
+    <title>FlashStudio | Halloween Edition 🎃</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="images/logo.png">
     <style>
         :root {
             --text-light: #e8e8e8;
@@ -20,7 +21,7 @@
             --header-bg: rgba(10, 5, 20, 0.95);
             --body-bg: linear-gradient(135deg, #0a0510 0%, #1a0a2e 40%, #2d1b4e 75%, #0a0510 100%);
         }
-        
+
         body.light-theme {
             --text-light: #2a1a3e;
             --text-secondary: rgba(42, 26, 62, 0.75);
@@ -30,9 +31,9 @@
             --header-bg: rgba(255, 245, 230, 0.95);
             --body-bg: linear-gradient(135deg, #fff5e6 0%, #ffe0cc 40%, #ffb366 75%, #ff8c00 100%);
         }
-        
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         body {
             font-family: 'Montserrat', sans-serif;
             color: var(--text-light);
@@ -43,7 +44,7 @@
             position: relative;
             transition: background 0.3s ease, color 0.3s ease;
         }
-        
+
         body::before {
             content: '';
             position: fixed;
@@ -56,18 +57,9 @@
             z-index: -2;
             pointer-events: none;
         }
-        
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M10,10 Q30,5 50,10 T90,10" stroke="rgba(255,102,0,0.05)" fill="none" stroke-width="0.5"/></svg>');
-            pointer-events: none;
-            z-index: -1;
-        }
-        
+
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        
+
         .product-card, .news-card, .faq-item, .stat-card {
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
@@ -75,7 +67,7 @@
             -webkit-backdrop-filter: blur(18px) saturate(140%);
             box-shadow: 0 10px 34px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,102,0,0.2);
         }
-        
+
         #bats {
             position: fixed;
             left: 0; right: 0;
@@ -85,7 +77,7 @@
             pointer-events: none;
             z-index: 950;
         }
-        
+
         .bat {
             position: absolute;
             top: -20px;
@@ -95,16 +87,14 @@
             user-select: none;
             font-size: 24px;
         }
-        
+
         @keyframes batFly {
             0% { transform: translate3d(-50px, 0, 0) rotate(0deg); opacity: 0; }
             10% { opacity: 0.8; }
             50% { transform: translate3d(calc(100vw + 50px), calc(var(--fly) * 0.5), 0) rotate(var(--rot)); }
             100% { transform: translate3d(calc(100vw + 100px), var(--fly), 0) rotate(calc(var(--rot) * 2)); opacity: 0; }
         }
-        
-        @media (prefers-reduced-motion: reduce) { .bat { display: none; } }
-        
+
         header {
             position: fixed;
             top: 0; left: 0;
@@ -118,7 +108,7 @@
             padding: 16px 0;
             transition: background 0.3s ease;
         }
-        
+
         .nav-container { display: flex; justify-content: space-between; align-items: center; }
         .left-section { display: flex; align-items: center; gap: 12px; }
         .social-icons { display: flex; gap: 10px; }
@@ -128,11 +118,11 @@
         .logo-img { height: 40px; width: auto; }
         .logo-text { font-size: 24px; font-weight: 800; color: var(--text-light); transition: transform 0.3s ease; }
         .logo-text:hover { transform: scale(1.06); }
-        
+
         .nav-menu { display: flex; gap: 28px; align-items: center; }
         .nav-menu a { color: var(--text-light); text-decoration: none; font-weight: 600; font-size: 16px; transition: color 0.3s; }
         .nav-menu a:hover { color: var(--halloween-orange); }
-        
+
         .theme-toggle {
             background: none;
             border: 2px solid var(--glass-border);
@@ -147,12 +137,12 @@
             font-size: 18px;
             transition: all 0.3s ease;
         }
-        
+
         .theme-toggle:hover {
             border-color: var(--halloween-orange);
             transform: rotate(180deg);
         }
-        
+
         .section {
             padding: 80px 0;
             opacity: 0;
@@ -168,7 +158,7 @@
             letter-spacing: 1px;
         }
         .section-title span { color: var(--halloween-orange); }
-        
+
         .hero {
             min-height: 76vh;
             display: flex; align-items: center; justify-content: center;
@@ -227,7 +217,7 @@
             box-shadow: 0 6px 20px rgba(255, 102, 0, 0.4);
         }
         .btn:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(255, 102, 0, 0.7); }
-        
+
         .market-grid {
             display: flex;
             flex-wrap: wrap;
@@ -374,17 +364,6 @@
             transform: translateY(-2px);
             box-shadow: 0 12px 30px rgba(255,102,0,.6);
         }
-        .download-btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -60%;
-            width: 40%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
-            transform: skewX(-20deg);
-            animation: shine 2.8s infinite;
-        }
         .download-btn.disabled {
             background: linear-gradient(45deg, #666, #888);
             box-shadow: none;
@@ -392,10 +371,6 @@
             opacity: 0.6;
             pointer-events: none;
         }
-        .download-btn.disabled::after {
-            display: none;
-        }
-        @keyframes shine { 0% { left: -60%; } 60%, 100% { left: 120%; } }
         .store-icons {
             display: flex; justify-content: center; align-items: center;
             gap: 12px; flex-wrap: wrap;
@@ -421,7 +396,7 @@
             color: white;
         }
         .store-icons a { text-decoration: none; }
-        
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -454,7 +429,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        
+
         .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         .news-card, .faq-item { border-radius: 14px; padding: 22px; }
         .news-card h3 { color: var(--halloween-orange); margin-bottom: 8px; }
@@ -473,7 +448,7 @@
             font-size: 14px; color: var(--text-secondary);
         }
         .faq-item.active .faq-answer { max-height: 200px; }
-        
+
         .faq-search {
             width: 100%;
             max-width: 600px;
@@ -495,7 +470,7 @@
         .faq-search::placeholder {
             color: var(--text-secondary);
         }
-        
+
         footer {
             padding: 30px 0;
             text-align: center;
@@ -505,7 +480,7 @@
             font-size: 14px;
             color: var(--text-secondary);
         }
-        
+
         .scroll-top {
             position: fixed;
             bottom: 30px;
@@ -535,7 +510,7 @@
             transform: translateY(-5px);
             box-shadow: 0 8px 30px rgba(255, 102, 0, 0.6);
         }
-        
+
         .menu-toggle {
             display: none;
             flex-direction: column;
@@ -560,7 +535,7 @@
         .menu-toggle.active span:nth-child(3) {
             transform: rotate(-45deg) translate(7px, -6px);
         }
-        
+
         @media (max-width: 768px) {
             .menu-toggle { display: flex; }
             
@@ -623,7 +598,7 @@
             footer { padding: 20px 0; font-size: 12px; }
             .scroll-top { bottom: 20px; right: 20px; width: 45px; height: 45px; }
         }
-        
+
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.6rem; }
             .section-title { font-size: 1.5rem; }
@@ -635,32 +610,17 @@
             .social-icons a { font-size: 1.2rem; }
             .stats-grid { grid-template-columns: 1fr; }
         }
-        
+
         @media (hover: none) {
             .btn, .price-btn, .download-btn, .faq-question, .store-icons > * { min-height: 44px; }
             .nav-menu a { min-height: 48px; display: flex; align-items: center; justify-content: center; }
         }
     </style>
 </head>
-<body style="background: linear-gradient(135deg, #150a10 0%, #33141f 40%, #5e241a 75%, #8f4b26 100%); min-height: 100vh; overflow-x: hidden; overflow-y: auto;">
-
-    <!-- Оверлей тех. работ (скрыт по умолчанию) -->
-    <div id="maintenanceOverlay" class="maintenance-overlay" style="display: none;">
-        <div class="gear">⚙️</div>
-        <h1>Технические работы</h1>
-        <p>Сайт временно недоступен. Мы работаем над улучшениями и скоро вернёмся!</p>
-    </div>
-
+<body>
     <div id="bats" aria-hidden="true"></div>
 
-    <!-- Бегущая строка -->
-<div class="ticker-wrapper" id="tickerWrapper">
-    <div class="ticker" id="ticker">
-        <div class="ticker-content" id="tickerContent"></div>
-    </div>
-</div>
-    
-    <header id="header">
+    <header>
         <div class="container nav-container">
             <div class="left-section">
                 <div class="social-icons">
@@ -672,26 +632,29 @@
                     <span class="logo-text">FLASH STUDIO</span>
                 </div>
             </div>
-        <div class="menu-toggle" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#home">Главная</a>
+                <a href="#games">Игры</a>
+                <a href="#stats">Статистика</a>
+                <a href="#news">Новости</a>
+                <a href="#faq">FAQ</a>
+                <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
         </div>
-        <nav class="nav-menu" id="navMenu">
-            <a href="#home">Главная</a>
-            <a href="#games">Игры</a>
-            <a href="#stats">Статистика</a>
-            <a href="#news">Новости</a>
-            <a href="#faq">FAQ</a>
-        <button class="theme-toggle" id="themeToggle" title="Сменить тему">
-            <i class="fas fa-moon"></i>
-        </button>
+    </header>
 
     <section id="home" class="section">
         <div class="container">
             <div class="hero">
                 <div>
-                    <div class="hero-badge"> 👻 Хэллоуинское обновление сайта</div>
+                    <div class="hero-badge">🎃 Хэллоуинское обновление сайта</div>
                     <h1>Добро пожаловать в FlashStudio</h1>
                     <p>Создаём инди-игры с душой. Наша миссия — вдохновлять, развлекать и удивлять.</p>
                     <a href="#games" class="btn">Наши проекты</a>
@@ -733,10 +696,10 @@
                             <div class="price-line">Цена: <span class="price-free">Бесплатно</span></div>
 
                             <div class="download-buttons">
-                                <a href="#" class="download-btn" id="downloadSite">
+                                <a href="#" class="download-btn disabled" id="downloadSite">
                                     <i class="fas fa-download"></i> СКАЧАТЬ С САЙТА
                                 </a>
-                                <a href="#" class="download-btn" id="downloadRuStore">
+                                <a href="#" class="download-btn disabled" id="downloadRuStore">
                                     <i class="fas fa-store"></i> СКАЧАТЬ С RUSTORE
                                 </a>
                             </div>
@@ -758,11 +721,42 @@
         </div>
     </section>
 
+    <section id="stats" class="section">
+        <div class="container">
+            <h2 class="section-title">Наша <span>Статистика</span></h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" data-target="1247">0</div>
+                    <div class="stat-label">Скачиваний</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="342">0</div>
+                    <div class="stat-label">Игроков онлайн</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="89">0</div>
+                    <div class="stat-label">Дней в разработке</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" data-target="156">0</div>
+                    <div class="stat-label">Членов Discord</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="news" class="section">
         <div class="container">
             <h2 class="section-title">Последние <span>Новости</span></h2>
             <div class="news-grid" id="newsGrid">
-                <!-- Новости загружаются из data.json -->
+                <div class="news-card">
+                    <h3>Хэллоуинское обновление!</h3>
+                    <p>Сайт получил новый тёмный дизайн с хэллоуинской тематикой. Летучие мыши, фиолетовые тона и жуткая атмосфера!</p>
+                </div>
+                <div class="news-card">
+                    <h3>Начало разработки игры</h3>
+                    <p>Сейчас мы активно ведём разработку нашей новой игры, после ухода из Roblox. Следите за обновлениями!</p>
+                </div>
             </div>
         </div>
     </section>
@@ -770,14 +764,15 @@
     <section id="faq" class="section">
         <div class="container">
             <h2 class="section-title">Частые <span>Вопросы</span></h2>
-            <div class="faq-container">
+            <input type="text" class="faq-search" id="faqSearch" placeholder="🔍 Поиск по вопросам...">
+            <div class="faq-container" id="faqContainer">
                 <div class="faq-item">
                     <div class="faq-question">
-                        <span>На каких платформах выходят ваши игры?</span>
+                        <span>На каких платформах выходит Final Bell?</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Большинство наших проектов ориентированы на ПК и мобильные платформы. Пока что мы только начинаем наш путь, поэтому выкладываем на платформы с бесплатными слотами для публикации приложений и игр.</p>
+                        <p>Игра будет доступна на PC (Windows, macOS, Linux) через Epic Games Store и RuStore, а также на мобильных устройствах через RuStore и Huawei AppGallery.</p>
                     </div>
                 </div>
                 <div class="faq-item">
@@ -786,7 +781,25 @@
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="faq-answer">
-                        <p>Все анонсы тестирований мы публикуем в нашем Telegram-канале и Discord-сервере. Присоединяйтесь!</p>
+                        <p>Все анонсы тестирований мы публикуем в нашем Telegram-канале и Discord-сервере. Присоединяйтесь и следите за обновлениями!</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Игра будет бесплатной?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Да! Final Bell будет полностью бесплатной (Free-to-Play). Мы не планируем добавлять платные микротранзакции.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Можно ли играть одному?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Final Bell — это мультиплеерная игра на 5 человек (4 выживших vs 1 аниматроник). Одиночный режим пока не планируется, но мы рассматриваем добавление ботов в будущем.</p>
                     </div>
                 </div>
             </div>
@@ -799,139 +812,72 @@
         </div>
     </footer>
 
-    <script>
-        // ============================================
-        // ЗАГРУЗКА ДАННЫХ ИЗ data.json
-        // ============================================
-        const REPO_OWNER = 'Bapew'; // ← ЗАМЕНИТЕ на ваш username GitHub
-        const REPO_NAME = 'bapew.github.io';       // ← ЗАМЕНИТЕ на название репозитория
+    <button class="scroll-top" id="scrollTop" title="Наверх">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
-        // Вспомогательная функция для правильного декодирования кириллицы из Base64
-        function base64ToUtf8(base64) {
-            const binaryString = atob(base64);
-            const bytes = new Uint8Array(binaryString.length);
-            for (let i = 0; i < binaryString.length; i++) {
-                bytes[i] = binaryString.charCodeAt(i);
-            }
-            return new TextDecoder('utf-8').decode(bytes);
-        }
+    <script>
+        const REPO_OWNER = 'Bapew';
+        const REPO_NAME = 'bapew.github.io';
 
         async function loadSiteData() {
-    try {
-        const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/data.json?t=${Date.now()}`);
-        if (!response.ok) throw new Error('Не удалось загрузить данные');
-        const data = await response.json();
-        
-        const binaryString = atob(data.content);
-        const bytes = new Uint8Array(binaryString.length);
-        for (let i = 0; i < binaryString.length; i++) {
-            bytes[i] = binaryString.charCodeAt(i);
+            try {
+                const response = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/data.json?t=${Date.now()}`);
+                
+                if (!response.ok) {
+                    throw new Error('Не удалось загрузить данные');
+                }
+                
+                const content = await response.text();
+                const siteData = JSON.parse(content);
+
+                if (siteData.siteStatus === 'maintenance') {
+                    document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;text-align:center;"><div><h1 style="font-size:3rem;margin-bottom:20px;">Технические работы</h1><p style="font-size:1.2rem;">Сайт временно недоступен. Мы работаем над улучшениями!</p></div></div>';
+                    return;
+                }
+
+                updateGameStatus(siteData.game.devStatus, siteData.game.activeStatus);
+                renderNews(siteData.news);
+            } catch (error) {
+                console.error('Ошибка загрузки данных:', error);
+            }
         }
-        const content = new TextDecoder('utf-8').decode(bytes);
-        const siteData = JSON.parse(content);
 
-        // Проверка статуса сайта
-        if (siteData.siteStatus === 'maintenance') {
-            document.getElementById('maintenanceOverlay').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            return;
+        function updateGameStatus(devStatus, activeStatus) {
+            const devBadge = document.getElementById('devStatusBadge');
+            const activeBadge = document.getElementById('activeStatusBadge');
+            const downloadSite = document.getElementById('downloadSite');
+            const downloadRuStore = document.getElementById('downloadRuStore');
+
+            const devMap = {
+                'dev': { class: 'dev-dev', icon: 'fa-hammer', text: 'В разработке' },
+                'alpha': { class: 'dev-alpha', icon: 'fa-flask', text: 'Альфа' },
+                'release': { class: 'dev-release', icon: 'fa-rocket', text: 'Релиз' }
+            };
+
+            const activeMap = {
+                'online': { class: 'act-online', text: 'Онлайн' },
+                'offline': { class: 'act-offline', text: 'Офлайн' },
+                'maintenance': { class: 'act-maint', text: 'Тех. работы' }
+            };
+
+            const dev = devMap[devStatus] || devMap['dev'];
+            const active = activeMap[activeStatus] || activeMap['online'];
+
+            devBadge.className = `status-badge ${dev.class}`;
+            devBadge.innerHTML = `<i class="fas ${dev.icon}"></i> ${dev.text}`;
+
+            activeBadge.className = `status-badge ${active.class}`;
+            activeBadge.innerHTML = `<span class="dot"></span> ${active.text}`;
+
+            if (devStatus === 'dev') {
+                downloadSite.classList.add('disabled');
+                downloadRuStore.classList.add('disabled');
+            } else {
+                downloadSite.classList.remove('disabled');
+                downloadRuStore.classList.remove('disabled');
+            }
         }
-
-        // Обновление бегущей строки
-        updateTicker(siteData.ticker);
-
-        // Обновление статуса игры
-        updateGameStatus(siteData.game.devStatus, siteData.game.activeStatus);
-
-        // Обновление новостей
-        renderNews(siteData.news);
-    } catch (error) {
-        console.error('Ошибка загрузки данных:', error);
-        renderNews([
-            { title: 'Ошибка загрузки новостей', text: 'Что-то пошло не так. Увы, но сегодня без новостей =(' },
-            { title: 'Ошибка загрузки новостей', text: 'Что-то пошло не так. Увы, но сегодня без новостей =(' }
-        ]);
-    }
-}
-
-function updateTicker(ticker) {
-    const wrapper = document.getElementById('tickerWrapper');
-    const content = document.getElementById('tickerContent');
-    
-    if (!ticker || !ticker.enabled) {
-        wrapper.classList.remove('active');
-        document.body.classList.remove('ticker-active');
-        return;
-    }
-    
-    wrapper.classList.add('active');
-    document.body.classList.add('ticker-active');
-    
-    // Устанавливаем цвет
-    const tickerElement = document.getElementById('ticker');
-    tickerElement.style.background = `rgba(0, 0, 0, 0.4)`;
-    content.style.color = ticker.color || '#fff5f0';
-    
-    // Формируем содержимое с учётом позиции иконки
-    let iconHTML = ticker.icon ? `<i class="fas ${ticker.icon} ticker-icon"></i>` : '';
-    
-    let html = '';
-    if (ticker.iconPosition === 'left') {
-        html = `${iconHTML}<span>${ticker.message}</span>`;
-    } else if (ticker.iconPosition === 'right') {
-        html = `<span>${ticker.message}</span>${iconHTML}`;
-    } else if (ticker.iconPosition === 'both') {
-        html = `${iconHTML}<span>${ticker.message}</span>${iconHTML}`;
-    } else {
-        html = `<span>${ticker.message}</span>`;
-    }
-    
-    content.innerHTML = html;
-}
-
-    function updateGameStatus(devStatus, activeStatus) {
-        const devBadge = document.getElementById('devStatusBadge');
-        const activeBadge = document.getElementById('activeStatusBadge');
-
-        const devMap = {
-            'dev': { class: 'dev-dev', icon: 'fa-hammer', text: 'В разработке' },
-            'alpha': { class: 'dev-alpha', icon: 'fa-flask', text: 'Альфа' },
-            'release': { class: 'dev-release', icon: 'fa-rocket', text: 'Релиз' }
-        };
-
-        const activeMap = {
-            'online': { class: 'act-online', text: 'Онлайн' },
-            'offline': { class: 'act-offline', text: 'Офлайн' },
-            'maintenance': { class: 'act-maint', text: 'Тех. работы' }
-        };
-
-        const dev = devMap[devStatus] || devMap['dev'];
-        const active = activeMap[activeStatus] || activeMap['online'];
-
-        devBadge.className = `status-badge ${dev.class}`;
-        devBadge.innerHTML = `<i class="fas ${dev.icon}"></i> ${dev.text}`;
-
-        activeBadge.className = `status-badge ${active.class}`;
-        activeBadge.innerHTML = `<span class="dot"></span> ${active.text}`;
-
-        // Управление кнопками скачивания
-        const downloadSite = document.getElementById('downloadSite');
-        const downloadRuStore = document.getElementById('downloadRuStore');
-    
-        if (devStatus === 'dev') {
-            // В разработке - кнопки неактивны
-            downloadSite.classList.add('disabled');
-            downloadRuStore.classList.add('disabled');
-            downloadSite.removeAttribute('href');
-            downloadRuStore.removeAttribute('href');
-        } else {
-            // Альфа или релиз - кнопки активны
-            downloadSite.classList.remove('disabled');
-            downloadRuStore.classList.remove('disabled');
-            downloadSite.href = '#'; // Замените на реальную ссылку
-            downloadRuStore.href = '#'; // Замените на реальную ссылку RuStore
-        }
-    }
 
         function renderNews(newsArray) {
             const grid = document.getElementById('newsGrid');
@@ -943,88 +889,43 @@ function updateTicker(ticker) {
             `).join('');
         }
 
-        async function loadSiteData() {
-            try {
-                // Используем raw.githubusercontent.com вместо API — без лимитов!
-                const response = await fetch(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/data.json?t=${Date.now()}`);
-                
-                if (!response.ok) {
-                    throw new Error('Не удалось загрузить данные');
-                }
-                
-                const content = await response.text();
-                const siteData = JSON.parse(content);
-        
-                // Проверка статуса сайта
-                if (siteData.siteStatus === 'maintenance') {
-                    document.getElementById('maintenanceOverlay').style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                    return;
-                }
-        
-                // Обновление бегущей строки (если есть)
-                if (typeof updateTicker === 'function') {
-                    updateTicker(siteData.ticker || { enabled: false });
-                }
-        
-                // Обновление статуса игры
-                updateGameStatus(siteData.game.devStatus, siteData.game.activeStatus);
-        
-                // Обновление новостей
-                renderNews(siteData.news);
-            } catch (error) {
-                console.error('Ошибка загрузки данных:', error);
-                // Если не удалось загрузить — показываем дефолтные данные
-                renderNews([
-                    { title: 'Запустили новый сайт!', text: 'Мы создали сайт, над которым сейчас активно работаем, чтобы он был удобнее, работоспособнее и информативнее.' },
-                    { title: 'Начало разработки игры', text: 'Сейчас мы активно ведём разработку нашей новой игры, после ухода из Roblox. Следите за обновлениями!' }
-                ]);
-            }
-        }
-        
-        // ============================================
-        // ЛЕТУЧИЕ МЫШИ (вместо листьев)
-        // ============================================
+        loadSiteData();
+
         const batsBox = document.getElementById('bats');
-        const headerEl  = document.getElementById('header');
-        
+        const headerEl = document.getElementById('header');
+
         function placeBatsBox() {
             batsBox.style.top = headerEl.offsetHeight + 'px';
         }
         placeBatsBox();
         window.addEventListener('resize', placeBatsBox);
-        
+
         function spawnBat() {
             if (document.hidden) return;
-            const bat  = document.createElement('span');
-            bat.className   = 'bat';
+            const bat = document.createElement('span');
+            bat.className = 'bat';
             bat.textContent = '🦇';
-        
+
             bat.style.left = Math.random() * 100 + '%';
             bat.style.fontSize = (18 + Math.random() * 16) + 'px';
             bat.style.animationDuration = (6 + Math.random() * 6) + 's';
             bat.style.setProperty('--fly', (80 + Math.random() * 120) + 'px');
-            bat.style.setProperty('--rot',  Math.floor(Math.random() * 40 - 20) + 'deg');
-        
+            bat.style.setProperty('--rot', Math.floor(Math.random() * 40 - 20) + 'deg');
+
             batsBox.appendChild(bat);
             bat.addEventListener('animationend', () => bat.remove());
         }
-        
+
         for (let i = 0; i < 3; i++) setTimeout(spawnBat, i * 500);
         setInterval(spawnBat, 1500);
-        
-        // ============================================
-        // РАСКРЫТИЕ КАРТОЧКИ
-        // ============================================
-        const gameCard  = document.getElementById('gameCard');
+
+        const gameCard = document.getElementById('gameCard');
         const toggleBtn = document.getElementById('toggleCard');
 
         function setCardState(expanded) {
             gameCard.classList.toggle('expanded', expanded);
             toggleBtn.setAttribute('aria-expanded', expanded);
-            toggleBtn.innerHTML = expanded
-                ? '<i class="fas fa-chevron-up"></i> Свернуть'
-                : 'Подробнее';
+            toggleBtn.innerHTML = expanded ? '<i class="fas fa-chevron-up"></i> Свернуть' : 'Подробнее';
             if (expanded) {
                 setTimeout(() => gameCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 350);
             }
@@ -1038,9 +939,6 @@ function updateTicker(ticker) {
             if (e.key === 'Escape' && gameCard.classList.contains('expanded')) setCardState(false);
         });
 
-        // ============================================
-        // АНИМАЦИЯ СЕКЦИЙ И FAQ
-        // ============================================
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach(entry => {
@@ -1066,9 +964,25 @@ function updateTicker(ticker) {
                 q.closest('.faq-item').classList.toggle('active');
             });
         });
-        // ============================================
-        // ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ
-        // ============================================
+
+        const faqSearch = document.getElementById('faqSearch');
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqSearch.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer p').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
         const themeToggle = document.getElementById('themeToggle');
         if (themeToggle) {
             const themeIcon = themeToggle.querySelector('i');
@@ -1100,10 +1014,7 @@ function updateTicker(ticker) {
                 }
             });
         }
-        
-        // ============================================
-        // КНОПКА НАВЕРХ
-        // ============================================
+
         const scrollTopBtn = document.getElementById('scrollTop');
         if (scrollTopBtn) {
             window.addEventListener('scroll', () => {
@@ -1118,10 +1029,7 @@ function updateTicker(ticker) {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
-        
-        // ============================================
-        // МОБИЛЬНОЕ МЕНЮ
-        // ============================================
+
         function toggleMenu() {
             const navMenu = document.getElementById('navMenu');
             const menuToggle = document.querySelector('.menu-toggle');
@@ -1130,9 +1038,8 @@ function updateTicker(ticker) {
                 menuToggle.classList.toggle('active');
             }
         }
-        
-        const navLinks = document.querySelectorAll('.nav-menu a');
-        navLinks.forEach(link => {
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 const navMenu = document.getElementById('navMenu');
                 const menuToggle = document.querySelector('.menu-toggle');
@@ -1142,9 +1049,38 @@ function updateTicker(ticker) {
                 }
             });
         });
-        </script>
-        <button class="scroll-top" id="scrollTop" title="Наверх">
-            <i class="fas fa-arrow-up"></i>
-        </button>
-    </body>
+
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            const speed = 200;
+            
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const inc = target / speed;
+                
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + inc);
+                    setTimeout(() => animateCounters(), 10);
+                } else {
+                    counter.innerText = target;
+                }
+            });
+        }
+
+        const statsSection = document.getElementById('stats');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+    </script>
+</body>
 </html>
