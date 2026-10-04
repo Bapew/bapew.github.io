@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <script>
+        (function() {
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-theme');
+            }
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlashStudio | Halloween Edition 🎃</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="icon" type="image/png" href="images/logo.png">
     <style>
@@ -35,7 +43,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             color: var(--text-light);
             background: var(--body-bg);
             min-height: 100vh;
@@ -1001,36 +1009,31 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Переключатель темы
     const themeToggle = document.getElementById('themeToggle');
     if (themeToggle) {
         const themeIcon = themeToggle.querySelector('i');
         
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            document.body.classList.add('light-theme');
-            if (themeIcon) {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            }
+        // НЕ применяем тему здесь — inline-скрипт уже сделал это
+        // Только синхронизируем иконку
+        if (document.body.classList.contains('light-theme') && themeIcon) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
         }
         
         themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-theme');
+            const nowLight = document.body.classList.toggle('light-theme');
             
-            if (document.body.classList.contains('light-theme')) {
-                if (themeIcon) {
+            if (themeIcon) {
+                if (nowLight) {
                     themeIcon.classList.remove('fa-moon');
                     themeIcon.classList.add('fa-sun');
-                }
-                localStorage.setItem('theme', 'light');
-            } else {
-                if (themeIcon) {
+                } else {
                     themeIcon.classList.remove('fa-sun');
                     themeIcon.classList.add('fa-moon');
                 }
-                localStorage.setItem('theme', 'dark');
             }
+            
+            localStorage.setItem('theme', nowLight ? 'light' : 'dark');
         });
     }
 
