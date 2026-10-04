@@ -8,12 +8,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         :root {
-            --text-light: #fff5f0;
-            --sunset-orange: #ff7e5f;
-            --sunset-pink: #feb47b;
-            --amber: #ffc46b;
-            --glass-border: rgba(255, 158, 112, 0.38);
-            --border-color: rgba(255, 126, 95, 0.3);
+            --text-light: #e8e8e8;
+            --text-secondary: rgba(232, 232, 232, 0.7);
+            --halloween-orange: #ff6600;
+            --halloween-purple: #6a0dad;
+            --halloween-green: #39ff14;
+            --halloween-red: #cc0000;
+            --glass-border: rgba(255, 102, 0, 0.4);
+            --border-color: rgba(106, 13, 173, 0.4);
+            --card-bg: linear-gradient(150deg, rgba(20, 10, 30, 0.9), rgba(10, 5, 20, 0.85));
+            --header-bg: rgba(10, 5, 20, 0.95);
+            --body-bg: linear-gradient(135deg, #0a0510 0%, #1a0a2e 40%, #2d1b4e 75%, #0a0510 100%);
+        }
+
+            body.light-theme {
+            --text-light: #2a1a3e;
+            --text-secondary: rgba(42, 26, 62, 0.75);
+            --glass-border: rgba(255, 102, 0, 0.5);
+            --border-color: rgba(106, 13, 173, 0.3);
+            --card-bg: linear-gradient(150deg, rgba(255, 240, 220, 0.95), rgba(255, 230, 200, 0.9));
+            --header-bg: rgba(255, 245, 230, 0.95);
+            --body-bg: linear-gradient(135deg, #fff5e6 0%, #ffe0cc 40%, #ffb366 75%, #ff8c00 100%);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -30,19 +45,19 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: url('images/FlashIcon.jpg') center/cover no-repeat;
-            filter: blur(8px);
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(106, 13, 173, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 102, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(57, 255, 20, 0.05) 0%, transparent 50%);
             z-index: -2;
-            opacity: 0.9;
+            pointer-events: none;
         }
+
         body::after {
             content: '';
             position: fixed;
             inset: 0;
-            background:
-                radial-gradient(40% 30% at 15% 18%, rgba(255,126,95,0.12), transparent 70%),
-                radial-gradient(35% 28% at 85% 30%, rgba(254,180,123,0.10), transparent 70%),
-                radial-gradient(45% 35% at 50% 88%, rgba(255,90,60,0.08), transparent 70%);
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M10,10 Q30,5 50,10 T90,10" stroke="rgba(255,102,0,0.05)" fill="none" stroke-width="0.5"/></svg>');
             pointer-events: none;
             z-index: -1;
         }
@@ -54,7 +69,7 @@
             -webkit-backdrop-filter: blur(18px) saturate(140%);
             box-shadow: 0 10px 34px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
         }
-        #leaves {
+        #bats {
             position: fixed;
             left: 0; right: 0;
             top: 72px;
@@ -63,34 +78,37 @@
             pointer-events: none;
             z-index: 950;
         }
-        .leaf {
+
+        .bat {
             position: absolute;
-            top: -16px;
+            top: -20px;
             opacity: 0;
-            animation: leafFall 6s ease-in forwards;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,.35));
-            will-change: transform, opacity;
+            animation: batFly 8s ease-in-out forwards;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,.5));
             user-select: none;
+            font-size: 24px;
         }
-        @keyframes leafFall {
-            0%   { transform: translate3d(0, -12px, 0) rotate(0deg); opacity: 0; }
-            12%  { opacity: .95; }
-            40%  { transform: translate3d(var(--sway), calc(var(--fall) * .4), 0) rotate(calc(var(--rot) * .5)); }
-            70%  { transform: translate3d(calc(var(--sway) * -.5), calc(var(--fall) * .75), 0) rotate(var(--rot)); opacity: .9; }
-            100% { transform: translate3d(var(--sway), var(--fall), 0) rotate(calc(var(--rot) * 1.4)); opacity: 0; }
+
+        @keyframes batFly {
+            0% { transform: translate3d(-50px, 0, 0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            50% { transform: translate3d(calc(100vw + 50px), calc(var(--fly) * 0.5), 0) rotate(var(--rot)); }
+            100% { transform: translate3d(calc(100vw + 100px), var(--fly), 0) rotate(calc(var(--rot) * 2)); opacity: 0; }
         }
-        @media (prefers-reduced-motion: reduce) { .leaf { display: none; } }
+
+        @media (prefers-reduced-motion: reduce) { .bat { display: none; } }
         header {
             position: fixed;
             top: 0; left: 0;
             width: 100%;
-            background: rgba(22, 12, 26, 0.6);
+            background: var(--header-bg);
             backdrop-filter: blur(16px) saturate(140%);
             -webkit-backdrop-filter: blur(16px) saturate(140%);
             border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 24px rgba(106, 13, 173, 0.3);
             z-index: 1000;
             padding: 16px 0;
+            transition: background 0.3s ease;
         }
         .nav-container { display: flex; justify-content: space-between; align-items: center; }
         .left-section { display: flex; align-items: center; gap: 12px; }
@@ -103,7 +121,26 @@
         .logo-text:hover { transform: scale(1.06); }
         .nav-menu { display: flex; gap: 28px; }
         .nav-menu a { color: var(--text-light); text-decoration: none; font-weight: 600; font-size: 16px; transition: color 0.3s; }
-        .nav-menu a:hover { color: var(--sunset-orange); }
+        .nav-menu a:hover { color: var(--halloween-orange); }
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--glass-border);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--halloween-orange);
+            transform: rotate(180deg);
+        }
         .section {
             padding: 80px 0;
             opacity: 0;
@@ -130,13 +167,13 @@
             display: inline-flex; align-items: center; gap: 8px;
             padding: 8px 18px;
             border-radius: 30px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid var(--glass-border);
+            background: rgba(106, 13, 173, 0.2);
+            border: 1px solid var(--halloween-purple);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+            box-shadow: inset 0 1px 0 rgba(255,102,0,0.2);
             font-size: 13px; font-weight: 600; letter-spacing: .3px;
-            color: var(--sunset-pink);
+            color: var(--halloween-orange);
             margin-bottom: 24px;
         }
         .hero h1 {
@@ -428,14 +465,137 @@
         .download-btn.disabled::after {
             display: none;
         }
-        
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--halloween-orange), var(--halloween-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(255, 102, 0, 0.4);
+            z-index: 999;
+            border: none;
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(255, 102, 0, 0.6);
+        }
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1000;
+        }
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-light);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.6rem; }
-            .hero p { font-size: 1.2rem; }
-            .nav-menu { flex-direction: column; gap: 12px; }
-            .left-section { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .section-title { font-size: 2.2rem; }
-            .product-card.expanded { max-width: 100%; }
+            .menu-toggle { display: flex; }
+               
+            .nav-menu {
+                position: fixed;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: var(--header-bg);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 30px 20px;
+                gap: 20px;
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+                z-index: 999;
+                border-bottom: 1px solid var(--border-color);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            }
+            .nav-menu.active { transform: translateY(0); }
+            .nav-menu a {
+                font-size: 18px;
+                padding: 10px 0;
+                text-align: center;
+            }
+            
+            .hero { min-height: 60vh; padding-top: 100px; padding-bottom: 40px; }
+            .hero h1 { font-size: 2rem; margin-bottom: 15px; }
+            .hero p { font-size: 1rem; margin-bottom: 25px; padding: 0 15px; }
+            .hero-badge { font-size: 11px; padding: 6px 14px; margin-bottom: 20px; }
+            .btn { padding: 12px 28px; font-size: 14px; }
+            .scroll-hint { display: none; }
+            .section-title { font-size: 1.8rem; margin-bottom: 30px; }
+            
+            .product-card { max-width: 100%; padding: 20px 16px; }
+            .product-card.expanded { padding: 20px 16px; }
+            .product-img-wrapper { width: 150px; height: 150px; }
+            .product-title { font-size: 1.3rem; }
+            .statuses { justify-content: center; }
+            .status-badge { font-size: 10px; padding: 4px 10px; }
+            .game-desc { font-size: 13px; line-height: 1.5; }
+            .platforms { justify-content: center; }
+            .platform-chip { font-size: 11px; padding: 6px 10px; }
+            .download-btn { font-size: 0.85rem; padding: 12px 10px; }
+            .store-icons > * { width: 34px; height: 34px; font-size: 14px; }
+            
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .stat-number { font-size: 2rem; }
+            .stat-label { font-size: 12px; }
+            
+            .news-grid { grid-template-columns: 1fr; gap: 20px; }
+            .news-card { padding: 18px; }
+            .news-card h3 { font-size: 1.1rem; }
+            .news-card p { font-size: 13px; }
+            
+            .faq-question { font-size: 14px; padding: 15px; }
+            .faq-answer { font-size: 13px; padding: 0 15px 15px; }
+            .faq-search { font-size: 13px; padding: 12px 16px; }
+            
+            footer { padding: 20px 0; font-size: 12px; }
+            .scroll-top { bottom: 20px; right: 20px; width: 45px; height: 45px; }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.6rem; }
+            .section-title { font-size: 1.5rem; }
+            .product-img-wrapper { width: 120px; height: 120px; }
+            .container { padding: 0 15px; }
+            .left-section { gap: 8px; }
+            .logo-text { font-size: 18px; }
+            .logo-img { height: 32px; }
+            .social-icons a { font-size: 1.2rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+        
+        @media (hover: none) {
+            .btn, .price-btn, .download-btn, .faq-question, .store-icons > * { min-height: 44px; }
+            .nav-menu a { min-height: 48px; display: flex; align-items: center; justify-content: center; }
         }
 
         /* --- Страница тех. работ --- */
@@ -481,7 +641,7 @@
         <p>Сайт временно недоступен. Мы работаем над улучшениями и скоро вернёмся!</p>
     </div>
 
-    <div id="leaves" aria-hidden="true"></div>
+    <div id="bats" aria-hidden="true"></div>
 
     <!-- Бегущая строка -->
 <div class="ticker-wrapper" id="tickerWrapper">
@@ -502,20 +662,27 @@
                     <span class="logo-text">FLASH STUDIO</span>
                 </div>
             </div>
-            <nav class="nav-menu">
-                <a href="#home">Главная</a>
-                <a href="#games">Игры</a>
-                <a href="#news">Новости</a>
-                <a href="#faq">FAQ</a>
-            </nav>
+                   <div class="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-    </header>
+        <nav class="nav-menu" id="navMenu">
+            <a href="#home">Главная</a>
+            <a href="#games">Игры</a>
+            <a href="#stats">Статистика</a>
+            <a href="#news">Новости</a>
+            <a href="#faq">FAQ</a>
+            <button class="theme-toggle" id="themeToggle" title="Сменить тему">
+                <i class="fas fa-moon"></i>
+            </button>
+        </nav>
 
     <section id="home" class="section">
         <div class="container">
             <div class="hero">
                 <div>
-                    <div class="hero-badge">🍂 Осеннее обновление сайта</div>
+                    <div class="hero-badge"> 👻 Хэллоуинское обновление сайта</div>
                     <h1>Добро пожаловать в FlashStudio</h1>
                     <p>Создаём инди-игры с душой. Наша миссия — вдохновлять, развлекать и удивлять.</p>
                     <a href="#games" class="btn">Наши проекты</a>
@@ -771,38 +938,36 @@ function updateTicker(ticker) {
         loadSiteData();
 
         // ============================================
-        // ЛИСТЬЯ
+        // ЛЕТУЧИЕ МЫШИ (вместо листьев)
         // ============================================
-        const leavesBox = document.getElementById('leaves');
+        const batsBox = document.getElementById('bats');
         const headerEl  = document.getElementById('header');
-
-        function placeLeavesBox() {
-            leavesBox.style.top = headerEl.offsetHeight + 'px';
+        
+        function placeBatsBox() {
+            batsBox.style.top = headerEl.offsetHeight + 'px';
         }
-        placeLeavesBox();
-        window.addEventListener('resize', placeLeavesBox);
-
-        function spawnLeaf() {
+        placeBatsBox();
+        window.addEventListener('resize', placeBatsBox);
+        
+        function spawnBat() {
             if (document.hidden) return;
-            const leaf  = document.createElement('span');
-            const icons = ['🍁', ''];
-            leaf.className   = 'leaf';
-            leaf.textContent = icons[Math.floor(Math.random() * icons.length)];
-
-            leaf.style.left = Math.random() * 100 + '%';
-            leaf.style.fontSize = (9 + Math.random() * 7) + 'px';
-            leaf.style.animationDuration = (4 + Math.random() * 4) + 's';
-            leaf.style.setProperty('--fall', (140 + Math.random() * 160) + 'px');
-            leaf.style.setProperty('--sway', (Math.random() * 60 - 30) + 'px');
-            leaf.style.setProperty('--rot',  Math.floor(Math.random() * 360) + 'deg');
-
-            leavesBox.appendChild(leaf);
-            leaf.addEventListener('animationend', () => leaf.remove());
+            const bat  = document.createElement('span');
+            bat.className   = 'bat';
+            bat.textContent = '🦇';
+        
+            bat.style.left = Math.random() * 100 + '%';
+            bat.style.fontSize = (18 + Math.random() * 16) + 'px';
+            bat.style.animationDuration = (6 + Math.random() * 6) + 's';
+            bat.style.setProperty('--fly', (80 + Math.random() * 120) + 'px');
+            bat.style.setProperty('--rot',  Math.floor(Math.random() * 40 - 20) + 'deg');
+        
+            batsBox.appendChild(bat);
+            bat.addEventListener('animationend', () => bat.remove());
         }
-
-        for (let i = 0; i < 5; i++) setTimeout(spawnLeaf, i * 250);
-        setInterval(spawnLeaf, 700);
-
+        
+        for (let i = 0; i < 3; i++) setTimeout(spawnBat, i * 500);
+        setInterval(spawnBat, 1500);
+        
         // ============================================
         // РАСКРЫТИЕ КАРТОЧКИ
         // ============================================
@@ -856,6 +1021,71 @@ function updateTicker(ticker) {
                 q.closest('.faq-item').classList.toggle('active');
             });
         });
+                // ============================================
+        // ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ
+        // ============================================
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            
+            if (document.body.classList.contains('light-theme')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        
+        // ============================================
+        // КНОПКА НАВЕРХ
+        // ============================================
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+        
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // ============================================
+        // МОБИЛЬНОЕ МЕНЮ
+        // ============================================
+        function toggleMenu() {
+            const navMenu = document.getElementById('navMenu');
+            const menuToggle = document.querySelector('.menu-toggle');
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        }
+        
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                const navMenu = document.getElementById('navMenu');
+                const menuToggle = document.querySelector('.menu-toggle');
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+            });
+        });
     </script>
+            <button class="scroll-top" id="scrollTop" title="Наверх">
+    <i class="fas fa-arrow-up"></i>
+</button>
 </body>
 </html>
